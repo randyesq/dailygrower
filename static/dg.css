@@ -1,0 +1,22 @@
+/* stylelint-disable selector-list-comma-newline-after */
+
+p {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  }
+
+.blog-header-tagline {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.content-link {
+  text-decoration: underline;
+  color: #282828;
+}
+
+.content-link:hover {
+  text-decoration: none;
+}
+
+.content-link-container {
+  line-height: 2;
+}

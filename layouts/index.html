@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Seelye Brook Farms LLC">
+    <meta http-equiv="refresh" content="60"/>
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Daily Grower</title>
+    <link rel="canonical" href="https://seelyebrookfarms.com">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- Font Awesome Fonts -->
+    <script src="https://kit.fontawesome.com/a87bb49577.js" crossorigin="anonymous"></script>
+
+    <!-- Inline styling -->
+    <style>
+      .content-link {
+        font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+      }
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="blog.css" rel="stylesheet">
+    <link href="dg.css" rel="stylesheet">
+  </head>  <!-- ./head -->
+
+  <body>
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-1">
+            <a class="text-muted" href="#">Subscribe</a>
+          </div>
+          <div class="col-4 text-center">
+            <a class="blog-header-logo text-dark" href="#">The Daily Grower</a>
+          </div>
+
+          <!-- Search Button -->
+          <div class="col-4 d-flex justify-content-end align-items-center">
+            <!--<a class="text-muted" href="#" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg></a>-->
+            <!--<a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>-->
+          </div>
+        </div>
+
+        <!-- Tagline -->
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-12 pt-3 text-center">
+            <p class="blog-header-tagline text-muted font-italic">Helping homesteaders and small farmers grow every day</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="nav-scroller py-1 ">
+        <nav class="nav d-flex justify-content-between">
+          <a class="p-2 text-muted" href="#">Homesteading</a>
+          <a class="p-2 text-muted" href="#">Health</a>
+          <a class="p-2 text-muted" href="#">Farming</a>
+          <a class="p-2 text-muted" href="#">Garden</a>
+          <a class="p-2 text-muted" href="#">Animals</a>
+          <a class="p-2 text-muted" href="#">Cookery</a>
+          <a class="p-2 text-muted" href="#">Lifestyle</a>
+          <a class="p-2 text-muted" href="#">Blogs</a>
+          <a class="p-2 text-muted" href="#">Youtube</a>
+          <a class="p-2 text-muted" href="#">Articles</a>
+          <a class="p-2 text-muted" href="#">Shopping</a>
+          <a class="p-2 text-muted" href="#">Permaculture</a>
+
+        </nav>
+      </div>
+    </div> <!-- ./container -->
+
+    <main role="main" class="container-fluid">
+      <div class="row align-items-center border-top content-link-container">
+        {{- range ( where site.RegularPages.ByPublishDate.Reverse "Section" "links") }}
+        <div class="col-md-4 border-right"> <!-- 3 columns until medium-sized devices, then stack -->
+          <div class="content-link-wrapper">
+            <a class="content-link" href="{{.Params.linkurl}}">{{.Params.linkTitle}}</a>
+            {{ if eq .Params.linkType "youtube"}}<i class="fab fa-youtube"></i>{{ end }}
+          </div> 
+        </div>
+        {{ end }}
+      </div>
+      <div class="row border-top justify-content-end" id="user-news-tips-form">
+        <div class="col-md-6">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Daily Grower Link Break Ad -->
+          <ins class="adsbygoogle"
+              data-ad-client="ca-pub-3256029525911021"
+              data-ad-slot="8849632662"
+              data-ad-format="auto"
+              data-full-width-responsive="true"></ins>
+          <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        <div class="col-md-6 pt-4 border-left" style="background-color: #f9f9f9;;">
+          <h5>Share great content!</h5>
+          <form name="user-news-tips" method="POST" action="/" netlify-honeypot="bot-field" data-netlify="true">
+            <p class="hidden d-none"><label>Don’t fill this out if you're human: <input name="bot-field" /></label></p>
+            <p> Have a site, vlog, article, or product that Daily Grower readers would find value in?
+              <label>Link: <input size="40" type="text" name="link" /></label><button class="ml-2 btn btn-sm btn-primary" type="submit">Share it!</button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </main><!-- /.main -->
+
+    <footer class="blog-footer">
+      <p>© {{ dateFormat "2006" now }} <a href="https://seelyebrookfarms.com/">Daily Grower</a></p>
+      <p><a href="#">Back to top</a></p>
+    </footer>
+  </body>
+</html>
