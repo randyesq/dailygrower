@@ -1,7 +1,7 @@
 ---
 title: "Mf Man Forages 78"
 date: 2020-10-19T22:59:21-05:00
-expiryDate: 2020-10-26 22:59:21.754022 -0500 CDT
+expiryDate: 2020-11-26 22:59:21.754022 -0500 CDT
 images: null
 layout: links
 linkType: null
