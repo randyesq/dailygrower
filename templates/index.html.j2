@@ -8,7 +8,7 @@
     <meta http-equiv="refresh" content="60"/>
     <meta name="generator" content="Jekyll v4.1.1">
     <title>Daily Grower</title>
-    <link rel="canonical" href="https://seelyebrookfarms.com">
+    <link rel="canonical" href="https://dailygrower.com">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -16,31 +16,10 @@
     <!-- Font Awesome Fonts -->
     <script src="https://kit.fontawesome.com/a87bb49577.js" crossorigin="anonymous"></script>
 
-    <!-- Inline styling -->
-    <style>
-      .content-link {
-        font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-      }
-
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="blog.css" rel="stylesheet">
-    <link href="dg.css" rel="stylesheet">
+    <link href="static/blog.css" rel="stylesheet">
+    <link href="static/dg.css" rel="stylesheet">
   </head>  <!-- ./head -->
 
   <body>
@@ -90,27 +69,21 @@
 
     <main role="main" class="container-fluid">
       <div class="row align-items-center border-top content-link-container">
-        {{- range ( where site.RegularPages.ByPublishDate.Reverse "Section" "links") }}
+
+        {# Iterate over links here #}
+        {% for link in links %}
         <div class="col-md-4 border-right"> <!-- 3 columns until medium-sized devices, then stack -->
           <div class="content-link-wrapper">
-            <a class="content-link" href="{{.Params.linkurl}}">{{.Params.linkTitle}}</a>
-            {{ if eq .Params.linkType "youtube"}}<i class="fab fa-youtube"></i>{{ end }}
+            <a class="content-link" href="{{ link.fields.Link }}">{{ link.fields.Headline }}</a>
+            <i class="fab fa-youtube"></i>
           </div> 
         </div>
-        {{ end }}
+        {% endfor %}
+        {# end Iterate over links here #}
       </div>
       <div class="row border-top justify-content-end" id="user-news-tips-form">
         <div class="col-md-6">
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <!-- Daily Grower Link Break Ad -->
-          <ins class="adsbygoogle"
-              data-ad-client="ca-pub-3256029525911021"
-              data-ad-slot="8849632662"
-              data-ad-format="auto"
-              data-full-width-responsive="true"></ins>
-          <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
+          Empty column
         </div>
         <div class="col-md-6 pt-4 border-left" style="background-color: #f9f9f9;;">
           <h5>Share great content!</h5>
@@ -125,7 +98,7 @@
     </main><!-- /.main -->
 
     <footer class="blog-footer">
-      <p>© {{ dateFormat "2006" now }} <a href="https://seelyebrookfarms.com/">Daily Grower</a></p>
+      <p>© {{  now.year }} <a href="https://dailygrower.com/">Daily Grower</a></p>
       <p><a href="#">Back to top</a></p>
     </footer>
   </body>

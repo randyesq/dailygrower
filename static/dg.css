@@ -9,8 +9,9 @@ p {
 }
 
 .content-link {
-  text-decoration: underline;
   color: #282828;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  text-decoration: underline;
 }
 
 .content-link:hover {
