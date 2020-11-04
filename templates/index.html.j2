@@ -50,37 +50,55 @@
 
       <div class="nav-scroller py-1 ">
         <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" href="#">Homesteading</a>
-          <a class="p-2 text-muted" href="#">Health</a>
-          <a class="p-2 text-muted" href="#">Farming</a>
-          <a class="p-2 text-muted" href="#">Garden</a>
-          <a class="p-2 text-muted" href="#">Animals</a>
-          <a class="p-2 text-muted" href="#">Cookery</a>
-          <a class="p-2 text-muted" href="#">Lifestyle</a>
-          <a class="p-2 text-muted" href="#">Blogs</a>
-          <a class="p-2 text-muted" href="#">Youtube</a>
-          <a class="p-2 text-muted" href="#">Articles</a>
-          <a class="p-2 text-muted" href="#">Shopping</a>
-          <a class="p-2 text-muted" href="#">Permaculture</a>
-
+        {% for tag in tags %}
+          <a class="p-2 text-muted link-tag-{{ tag }}" href="#">{{ tag }}</a>
+        {% endfor %}
         </nav>
       </div>
     </div> <!-- ./container -->
 
     <main role="main" class="container-fluid">
-      <div class="row align-items-center border-top content-link-container">
-
-        {# Iterate over links here #}
-        {% for link in links %}
-        <div class="col-md-4 border-right"> <!-- 3 columns until medium-sized devices, then stack -->
-          <div class="content-link-wrapper">
-            <a class="content-link" href="{{ link.fields.Link }}">{{ link.fields.Headline }}</a>
-            <i class="fab fa-youtube"></i>
-          </div> 
+      <div class="row align-items-top border-bottom border-top content-link-container">
+        {% for link_list in links|batch(3) %}
+        <div class="col-md-4 p-1 border-left">
+          {% for link in link_list %}
+          <div class="col-md-12 pl-1 content-link-wrapper">
+            {% if link %}
+              {#{% if link.fields['Image URL'] %}<img class="img-responsive" src="{{ link.fields['Image URL'] }}" alt="{{ link.fields['Image Alt'] }}"> {% endif %}#}
+              <a class="content-link" href="{{ link.fields.Link }}">{{ link.fields.Headline|title }}</a>
+              {% if 'youtu' in link.fields.Link %}<i class="fab fa-youtube"></i>{% endif %}
+            {% else %}
+              &nbsp;
+            {% endif %}
+          </div>
+          {% endfor %}
         </div>
         {% endfor %}
-        {# end Iterate over links here #}
       </div>
+
+<!--
+        <div class="col-xs-6">
+            <div class="col-xs-12">1</div>
+            <div class="col-xs-12">2</div>
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-6">3</div>
+                    <div class="col-xs-6">4</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="col-xs-12">5</div>
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-6">6</div>
+                    <div class="col-xs-6">7</div>
+                </div>
+            </div>
+            <div class="col-xs-12">8</div>
+        </div>
+-->
+
       <div class="row border-top justify-content-end" id="user-news-tips-form">
         <div class="col-md-6">
           Empty column

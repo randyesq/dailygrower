@@ -22,4 +22,12 @@ def fetch_links(base_id="app79OUH4JFgpGic3", view="Live", table="Content", api_k
     url_path = posixpath.join(AIRTABLE_API_VERSION, base_id, table)
     url = urljoin(AIRTABLE_API_BASE_URL, url_path)
     r = requests.get(url, params={'view': view, 'userLocale': 'America/Chicago'}, auth=BearerAuth(api_key))
-    return r.json()
+    return r.json()['records']
+
+
+def get_link_tags(links):
+    """ From the list of links, get the tags """
+    tags = set()
+    for link in links:
+        tags.update(link['fields']['Link Tags'])
+    return tags

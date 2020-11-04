@@ -4,7 +4,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
-from dailygrower.airtable import fetch_links
+from dailygrower.airtable import fetch_links, get_link_tags
+from dailygrower.links import weight_links
 
 template_name = os.environ.get('TEMPLATE_NAME', 'index.html.j2')
 output_dir = Path(os.environ.get('OUTPUT_DIR', Path(__file__).parent.parent.joinpath('output')))
@@ -17,12 +18,17 @@ env = Environment(
     autoescape=True
 )
 
-globals = {
+# Fetch the links from the database
+links = fetch_links(view="Live", table="Content")
+links = weight_links(links)
+
+template_globals = {
     'now': datetime.datetime.now(),
-    'links': fetch_links()['records'],
+    'links': links,
+    'tags': get_link_tags(links)
 }
 
-template = env.get_template(template_name, globals=globals)
+template = env.get_template(template_name, globals=template_globals)
 
 # Write the template file (removing the .j2 extension) to the output_dir
 with open(str(output_dir/Path(template_name).stem), 'w') as template_output_file:
