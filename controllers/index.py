@@ -22,6 +22,7 @@ env = Environment(
 links = fetch_links(view="Live", table="Content")
 links = weight_links(links)
 
+# Template variables
 template_globals = {
     'now': datetime.datetime.now(),
     'links': links,

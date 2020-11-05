@@ -21,3 +21,11 @@ p {
 .content-link-container {
   line-height: 2;
 }
+
+img {
+  max-width: 100%;
+}
+
+div {
+  border: 1px black;
+}

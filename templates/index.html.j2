@@ -1,13 +1,25 @@
+{% set num_columns = 3 %}
+{% set link_batch = (links | length / num_columns) | int %}
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-53R00HG8VN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-53R00HG8VN');
+    </script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="The best daily content for homesteaders, farmers, and growers all over the world.">
     <meta name="author" content="Seelye Brook Farms LLC">
-    <meta http-equiv="refresh" content="60"/>
-    <meta name="generator" content="Jekyll v4.1.1">
-    <title>Daily Grower</title>
+    <meta http-equiv="refresh" content="600"/>
+    <meta name="generator" content="Python 3.7; Jinja2 2.11">
+    <title>The Daily Grower</title>
     <link rel="canonical" href="https://dailygrower.com">
 
     <!-- Bootstrap core CSS -->
@@ -43,14 +55,14 @@
         <!-- Tagline -->
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-12 pt-3 text-center">
-            <p class="blog-header-tagline text-muted font-italic">Helping homesteaders and small farmers grow every day</p>
+            <p class="blog-header-tagline text-muted font-italic">Helping you grow every day</p>
           </div>
         </div>
       </header>
 
       <div class="nav-scroller py-1 ">
         <nav class="nav d-flex justify-content-between">
-        {% for tag in tags %}
+        {% for tag in tags | sort %}
           <a class="p-2 text-muted link-tag-{{ tag }}" href="#">{{ tag }}</a>
         {% endfor %}
         </nav>
@@ -59,46 +71,23 @@
 
     <main role="main" class="container-fluid">
       <div class="row align-items-top border-bottom border-top content-link-container">
-        {% for link_list in links|batch(3) %}
-        <div class="col-md-4 p-1 border-left">
+        {% for link_list in links|batch(link_batch) %}
+        <div class="col-lg-4 p-1 border-left">
           {% for link in link_list %}
-          <div class="col-md-12 pl-1 content-link-wrapper">
+          <div class="col-lg-12 pl-1 content-link-wrapper">
             {% if link %}
-              {#{% if link.fields['Image URL'] %}<img class="img-responsive" src="{{ link.fields['Image URL'] }}" alt="{{ link.fields['Image Alt'] }}"> {% endif %}#}
-              <a class="content-link" href="{{ link.fields.Link }}">{{ link.fields.Headline|title }}</a>
+              {#{% if link.fields['Image URL'] %}<img class="img-responsive" src="{{ link.fields['Image URL'] }}" alt="{{ link.fields['Image Alt'] }}"><br /> {% endif %}#}
               {% if 'youtu' in link.fields.Link %}<i class="fab fa-youtube"></i>{% endif %}
+              {% if 'Shopping' in link.fields['Link Tags'] %}<i class="fas fa-shopping-cart"></i>{% endif %}
+              <a class="content-link" href="{{ link.fields.Link }}">{{ link.fields.Headline|title }}</a>
             {% else %}
-              &nbsp;
+              This ended up not being a link.
             {% endif %}
           </div>
           {% endfor %}
         </div>
         {% endfor %}
       </div>
-
-<!--
-        <div class="col-xs-6">
-            <div class="col-xs-12">1</div>
-            <div class="col-xs-12">2</div>
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-xs-6">3</div>
-                    <div class="col-xs-6">4</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6">
-            <div class="col-xs-12">5</div>
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-xs-6">6</div>
-                    <div class="col-xs-6">7</div>
-                </div>
-            </div>
-            <div class="col-xs-12">8</div>
-        </div>
--->
-
       <div class="row border-top justify-content-end" id="user-news-tips-form">
         <div class="col-md-6">
           Empty column
