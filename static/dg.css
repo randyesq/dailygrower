@@ -14,6 +14,12 @@ p {
   text-decoration: underline;
 }
 
+.content-link-blurb {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  line-height: 1.2;
+  color: #555555;
+}
+
 .content-link:hover {
   text-decoration: none;
 }

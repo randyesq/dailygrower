@@ -28,6 +28,7 @@ template_globals = {
     'links': links,
     'tags': get_link_tags(links),
     'ENABLE_GOOGLE_LINK_TRACKING': True,
+    'ENABLE_TAGS': False,
 }
 
 template = env.get_template(template_name, globals=template_globals)
