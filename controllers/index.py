@@ -26,7 +26,8 @@ links = weight_links(links)
 template_globals = {
     'now': datetime.datetime.now(),
     'links': links,
-    'tags': get_link_tags(links)
+    'tags': get_link_tags(links),
+    'ENABLE_GOOGLE_LINK_TRACKING': True,
 }
 
 template = env.get_template(template_name, globals=template_globals)
