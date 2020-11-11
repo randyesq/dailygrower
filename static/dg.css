@@ -14,24 +14,24 @@ p {
   text-decoration: underline;
 }
 
+.content-link:hover {
+  text-decoration: none;
+}
+
 .content-link-blurb {
   font-family: Georgia, 'Times New Roman', Times, serif;
   line-height: 1.2;
   color: #555555;
 }
 
-.content-link:hover {
-  text-decoration: none;
+.content-link-netloc {
+  font-size: small;
 }
 
 .content-link-container {
   line-height: 2;
 }
 
-img {
-  max-width: 100%;
-}
-
-div {
-  border: 1px black;
+.sidebar-card {
+  border: 0px;
 }
