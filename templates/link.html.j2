@@ -1,0 +1,20 @@
+{% if 'Shopping' in link.fields['Link Tags'] %}
+<i class="fas fa-shopping-cart"></i>
+{% elif 'youtu' in link.fields.Link %}
+<i class="fab fa-youtube"></i>
+{% elif 'Cookery' in link.fields['Link Tags'] %}
+<i class="fas fa-utensils"></i>
+{% elif 'Articles' in link.fields['Link Tags'] or 'Blogs' in link.fields['Link Tags'] %}
+<i class="far fa-newspaper"></i>
+{% endif %}
+<a class="content-link" href="{{ link.fields.Link }}" {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.fields.Link }}'); return false;"{% endif %}>{{ link.fields.Headline|title }}</a>
+{% if ENABLE_LINK_NETLOC %}<span class="content-link-netloc">({{ link['netloc'] }})</span>{% endif %}
+{% if ENABLE_LINK_SCORE_DISPLAY %}<button type="button" class="btn btn-primary"><span class="badge badge-light">{{ link.score | round(1) }}</span></button>{% endif %}
+{% if ENABLE_TAGS %}
+<div class="tag-list">
+  {% for tag in link.fields['Link Tags'] %}
+  <span class="badge badge-light">{{ tag }}</span>
+  {% endfor %}
+</div>
+{% endif %}
+<p class="content-link-blurb">{{ link.fields.Blurb }}</p>

@@ -1,141 +1,20 @@
-{% set num_columns = 3 %}
-{% set link_batch = (links | length / num_columns) | int %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-53R00HG8VN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+{# Home Page  - index.html #}
+{% extends "base.html.j2" %}
 
-      gtag('config', 'G-53R00HG8VN');
-    </script>
+{% block content %}
+  {% for link in links %}
+  <div class="row">
+    <div class="col-md-12 border-bottom">{% include 'link.html.j2' %}</div>
+  </div>
+  {% endfor %}
+{% endblock content %}
 
-    <!-- Google outbound click registration in Analytics https://support.google.com/analytics/answer/7478520?hl=en -->
-    <script>
-    /**
-    * Function that registers a click on an outbound link in Analytics.
-    * This function takes a valid URL string as an argument, and uses that URL string
-    * as the event label. Setting the transport method to 'beacon' lets the hit be sent
-    * using 'navigator.sendBeacon' in browser that support it.
-    */
-    var getOutboundLink = function(url) {
-      gtag('event', 'click', {
-        'event_category': 'outbound',
-        'event_label': url,
-        'transport_type': 'beacon',
-        'event_callback': function(){document.location = url;}
-      });
-    }
-    </script>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="The best daily content for homesteaders, farmers, and growers all over the world.">
-    <meta name="author" content="Seelye Brook Farms LLC">
-    <meta http-equiv="refresh" content="600"/>
-    <meta name="generator" content="Python 3.7; Jinja2 2.11">
-    <title>The Daily Grower</title>
-    <link rel="canonical" href="https://dailygrower.com">
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-    <!-- Font Awesome Fonts -->
-    <script src="https://kit.fontawesome.com/a87bb49577.js" crossorigin="anonymous"></script>
-
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="static/blog.css" rel="stylesheet">
-    <link href="static/dg.css" rel="stylesheet">
-  </head>  <!-- ./head -->
-
-  <body>
-    <div class="container">
-      <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4 pt-1">
-            <a class="text-muted" href="#">Subscribe</a>
-          </div>
-          <div class="col-4 text-center">
-            <a class="blog-header-logo text-dark" href="#">The Daily Grower</a>
-          </div>
-
-          <!-- Search Button -->
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <!--<a class="text-muted" href="#" aria-label="Search"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg></a>-->
-            <!--<a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>-->
-          </div>
-        </div>
-
-        <!-- Tagline -->
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-12 pt-3 text-center">
-            <p class="blog-header-tagline text-muted font-italic">Helping you grow every day</p>
-          </div>
-        </div>
-      </header>
-
-      {% if ENABLE_TAGS %}
-      <div class="nav-scroller py-1 ">
-        <nav class="nav d-flex justify-content-between">
-        {% for tag in tags | sort %}
-          <a class="p-2 text-muted link-tag-{{ tag }}" href="#">{{ tag }}</a>
-        {% endfor %}
-        </nav>
-      </div>
-      {% endif %}
-    </div> <!-- ./container -->
-
-    <main role="main" class="container-fluid">
-      <div class="row align-items-top border-bottom border-top content-link-container">
-        {% for link_list in links|batch(link_batch) %}
-        <div class="col-lg-4 p-1 border-left">
-          {% for link in link_list %}
-          <div class="col-lg-12 pl-1 content-link-wrapper">
-            {% if link %}
-              {#{% if link.fields['Image URL'] %}<img class="img-responsive" src="{{ link.fields['Image URL'] }}" alt="{{ link.fields['Image Alt'] }}"><br /> {% endif %}#}
-              {% if 'youtu' in link.fields.Link %}
-                <i class="fab fa-youtube"></i>
-              {% elif 'Cookery' in link.fields['Link Tags'] %}
-                <i class="fas fa-utensils"></i>
-              {% elif 'Articles' in link.fields['Link Tags'] or 'Blogs' in link.fields['Link Tags'] %}
-                <i class="far fa-newspaper"></i>
-              {% endif %}
-              {% if 'Shopping' in link.fields['Link Tags'] %}<i class="fas fa-shopping-cart"></i>{% endif %}
-              <a class="content-link" href="{{ link.fields.Link }}" {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.fields.Link }}'); return false;"{% endif %}>{{ link.fields.Headline|title }}</a>
-              <p class="content-link-blurb">
-                {{ link.fields.Blurb }}
-              </p>
-            {% else %}
-              This ended up not being a link.
-            {% endif %}
-          </div>
-          {% endfor %}
-        </div>
-        {% endfor %}
-      </div>
-      <div class="row border-top justify-content-end" id="user-news-tips-form">
-        <div class="col-md-6">
-          Empty column
-        </div>
-        <div class="col-md-6 pt-4 border-left" style="background-color: #f9f9f9;;">
-          <h5>Share great content!</h5>
-          <form name="user-news-tips" method="POST" action="/" netlify-honeypot="bot-field" data-netlify="true">
-            <p class="hidden d-none"><label>Don’t fill this out if you're human: <input name="bot-field" /></label></p>
-            <p> Have a site, vlog, article, or product that Daily Grower readers would find value in?
-              <label>Link: <input size="40" type="text" name="link" /></label><button class="ml-2 btn btn-sm btn-primary" type="submit">Share it!</button>
-            </p>
-          </form>
-        </div>
-      </div>
-    </main><!-- /.main -->
-
-    <footer class="blog-footer">
-      <p>© {{  now.year }} <a href="https://dailygrower.com/">Daily Grower</a></p>
-      <p><a href="#">Back to top</a></p>
-    </footer>
-  </body>
-</html>
+{% block sidebar %}
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-welcome.html.j2' %}</div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-contribute.html.j2' %}</div>
+</div>
+{% endblock sidebar %}

@@ -1,11 +1,12 @@
 import datetime
+import math
 import os
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
 from dailygrower.airtable import fetch_links, get_link_tags
-from dailygrower.links import weight_links
+from dailygrower.links import weight_links, parse_netloc
 
 template_name = os.environ.get('TEMPLATE_NAME', 'index.html.j2')
 output_dir = Path(os.environ.get('OUTPUT_DIR', Path(__file__).parent.parent.joinpath('output')))
@@ -21,14 +22,19 @@ env = Environment(
 # Fetch the links from the database
 links = fetch_links(view="Live", table="Content")
 links = weight_links(links)
+links = parse_netloc(links)
 
 # Template variables
 template_globals = {
     'now': datetime.datetime.now(),
     'links': links,
     'tags': get_link_tags(links),
+    'loop_batch': math.ceil(len(links) / 2),
     'ENABLE_GOOGLE_LINK_TRACKING': True,
     'ENABLE_TAGS': False,
+    'ENABLE_LINK_NETLOC': True,
+    'ENABLE_LINK_SCORE_DISPLAY': False,
+    'ENABLE_AUTOREFRESH': True,
 }
 
 template = env.get_template(template_name, globals=template_globals)
