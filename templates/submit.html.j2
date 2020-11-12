@@ -1,21 +1,65 @@
-{# User submission page  - index.html #}
+{# User submission page  - submit.html #}
 {% extends "base.html.j2" %}
 
+{% block sidebar %}
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-welcome.html.j2' %}</div>
+</div>
+<hr>
+{% endblock sidebar %}
+
 {% block content %}
-<form name="user-news-tips" method="POST" action="/" netlify-honeypot="bot-field" data-netlify="true">
-<div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-</div>
-<div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-</div>
-<div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-</div>
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <h5>Have a link to share with our readers?</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-2">
+        <p class="user-form-text">
+          <i>The Daily Grower</i> can only provide the best content on the web with the help of folks like you.
+          If you have something to share that is awesome, we'd like to know about it!
+        </p>
+        <p class="user-form-text">
+          You are welcome to share your own content, but please send us <i>your best content only</i>.
+          The easiest way to get your link featured is to make sure it:
+          <ol class="user-form-text">
+            <li>is unique, </li>
+            <li>is relevant to homesteaders and small farmers, and</li>
+            <li>provides great value in terms of knowledge, time, and resources.</li>
+          </ol>
+        </p>
+        <form name="user-news-tips" method="POST" action="/" netlify-honeypot="bot-field" data-netlify="true" data-netlify-recaptcha="true">
+            <div class="form-group">
+                <label for="userInputEmail1">Email address</label>
+                <input type="email" name="email" class="form-control" id="userInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="userInputURL1">Link URL</label>
+                <input type="url" name="url" class="form-control" id="userInputURL1" aria-describedby="urlHelp" placeholder="Enter youtube, blog, shopping, article, etc link">
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" name="self-link" class="form-check-input" aria-describedby="ownWorkHelp" id="ownWorkCheck1">
+                    <label class="form-check-label" for="ownWorkCheck1">This is my own work</label>
+                    <small id="ownWorkHelp" class="form-text text-muted">Totally okay to promote your own work, we'd just like to know.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" name="selling" class="form-check-input" aria-describedby="shoppingHelp" id="shoppingCheck1">
+                    <label class="form-check-label" for="shoppingCheck1">This link is offering something to sell to <i>Daily Grower</i> readers.</label>
+                    <small id="shoppingHelp" class="form-text text-muted">Again, totally okay to promote something, we'd just treat links that attempt to sell with more discretion to ensure the product it is something our readers would find value in.</small>
+                </div>
+            </div>
+            <div data-netlify-recaptcha="true"></div>
+            <div class="form-group pt-2 pb-2"><button type="submit" class="btn btn-primary">Submit</button></div>
+        </form>
+
+    </div>
+  </div>
 {% endblock content %}

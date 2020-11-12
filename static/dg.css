@@ -18,7 +18,7 @@ p {
   text-decoration: none;
 }
 
-.content-link-blurb {
+.content-link-blurb, .user-form-text {
   font-family: Georgia, 'Times New Roman', Times, serif;
   line-height: 1.2;
   color: #555555;
@@ -34,4 +34,10 @@ p {
 
 .sidebar-card {
   border: 0px;
+}
+
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 2px;
 }
