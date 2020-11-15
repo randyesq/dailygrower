@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
+import pytz
 
 from dailygrower.airtable import fetch_links, get_link_tags
 from dailygrower.links import weight_links, parse_netloc
@@ -25,9 +26,13 @@ ads = fetch_links(view="Live", table="Advertisements")
 links = weight_links(links)
 links = parse_netloc(links)
 
+
+# Get the date in the CST/CDT timezone
+tz = pytz.timezone('America/Chicago')
+
 # Template variables
 template_globals = {
-    'now': datetime.datetime.now(),
+    'now': datetime.datetime.now(tz),
     'links': links,
     'ads': ads,
     'tags': get_link_tags(links),
