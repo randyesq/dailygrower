@@ -1,9 +1,10 @@
 # This is a basic workflow to deploy the daily grower website every morning at 3am Central
-name: new-day-deploy
+name: new-day-main-deploy
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
 on:
+  workflow_dispatch:
   schedule:
   - cron: "0 9 * * *"
 
