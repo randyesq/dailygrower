@@ -7,11 +7,11 @@ on:
   schedule:
   - cron: "0 9 * * *"
 
+# Deploy using a netlify build hook
 jobs:
-  # Deploy using a netlify build hook
   deploy:
-  - name: Deploy Stage
-    uses: fjogeleit/http-request-action@master
-    with:
-      url: 'https://api.netlify.com/build_hooks/5fb0bcf3f71623a5bcd95256?trigger_branch=main&trigger_title=github+new+day+deploy'
-      method: 'POST'
+    steps:
+    - uses: fjogeleit/http-request-action@master
+      with:
+        url: 'https://api.netlify.com/build_hooks/5fb0bcf3f71623a5bcd95256?trigger_branch=main&trigger_title=github+new+day+deploy'
+        method: 'POST'
