@@ -11,6 +11,7 @@ on:
 # Deploy using a netlify build hook
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     steps:
     - uses: fjogeleit/http-request-action@master
       with:
