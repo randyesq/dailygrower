@@ -11,7 +11,7 @@ p {
 .content-link {
   color: #282828;
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .content-link:hover {

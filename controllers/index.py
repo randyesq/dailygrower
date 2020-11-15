@@ -12,15 +12,16 @@ template_name = os.environ.get('TEMPLATE_NAME', 'index.html.j2')
 output_dir = Path(os.environ.get('OUTPUT_DIR', Path(__file__).parent.parent.joinpath('output')))
 
 env = Environment(
-    loader=FileSystemLoader(
-        Path(__file__).parent.parent.joinpath('templates')
-    ),
+    loader=FileSystemLoader(Path(__file__).parent.parent.joinpath('templates')),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True
 )
 
+LINKS_PER_PAGE = 5
+
 # Fetch the links from the database
 links = fetch_links(view="Live", table="Content")
+ads = fetch_links(view="Live", table="Advertisements")
 links = weight_links(links)
 links = parse_netloc(links)
 
@@ -28,8 +29,11 @@ links = parse_netloc(links)
 template_globals = {
     'now': datetime.datetime.now(),
     'links': links,
+    'ads': ads,
     'tags': get_link_tags(links),
-    'loop_batch': math.ceil(len(links) / 2),
+    'links_per_page': LINKS_PER_PAGE,
+    'link_pagination_pages': math.ceil(len(links) / LINKS_PER_PAGE),
+    'ENABLE_GOOGLE_ADS': False,
     'ENABLE_GOOGLE_LINK_TRACKING': True,
     'ENABLE_TAGS': False,
     'ENABLE_LINK_NETLOC': True,
