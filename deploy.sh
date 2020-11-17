@@ -8,4 +8,5 @@ pip3 install -r requirements.txt
 cp -r static/* ${OUTPUT_DIR}/static
 TEMPLATE_NAME=index.html.j2 python3 controllers/index.py
 TEMPLATE_NAME=submit.html.j2 python3 controllers/index.py
-
+TEMPLATE_NAME=subscribe.html.j2 python3 controllers/index.py
+TEMPLATE_NAME=contrib-thanks.html.j2 python3 controllers/index.py

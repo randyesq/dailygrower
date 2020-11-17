@@ -1,0 +1,43 @@
+{# User submission thank you page  - contrib-thanks.html #}
+{% extends "base.html.j2" %}
+
+{# Force disable of autorefresh on this page #}
+{% block autorefresh %}
+<meta http-equiv="refresh" content="12; url=https://dailygrower.com"/>
+{% endblock autorefresh %}
+
+{# Title for this page #}
+{% block title %}Thank You{% endblock title %}
+
+{% block sidebar %}
+{{ super() }}
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-welcome.html.j2' %}</div>
+</div>
+<hr>
+{% endblock sidebar %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12 p-2 justify-content-md-center">
+      <h3>Thank you!</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <p class="user-form-text">Hey.</p>
+      <p class="user-form-text">Thanks a bunch for the link.</p>
+      <p class="user-form-text">We're gonna check it out.</p>
+      <p class="user-form-text">Promise.</p>
+      <p class="user-form-text">
+        Right you can click the link below to go back to
+        <i>The Daily Grower</i> <b>OR</b> you can just sit tight and we'll
+        take you there auto-magically in a few seconds.
+      </p>
+    </div>
+    <div class="col-md-12 p-2">
+      Back to <a href="index.html" class="btn btn-primary active" role="button" aria-pressed="true">The Daily Grower</a>
+    </div>
+  </div>
+{% endblock content %}

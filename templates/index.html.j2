@@ -1,6 +1,12 @@
 {# Home Page  - index.html #}
 {% extends "base.html.j2" %}
 
+{% block autorefresh %}
+{% if ENABLE_AUTOREFRESH %}
+<meta http-equiv="refresh" content="600"/>
+{% endif %}
+{% endblock autorefresh %}
+
 {% block page_js %}
 <script type="text/javascript" src="static/js/twbsPagination.js"></script>
 <script type="text/javascript">
@@ -70,8 +76,10 @@ $( document ).ready(function() {
 {% endblock content %}
 
 {% block sidebar %}
+{{ super() }}
+<hr>
 <div class="row">
-  <div class="col-md-12">{% include 'sidebar-welcome.html.j2' %}</div>
+  <div class="col-md-12">{% include 'sidebar-subscribe.html.j2' %}</div>
 </div>
 <hr>
 <div class="row">
