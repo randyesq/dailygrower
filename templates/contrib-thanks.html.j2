@@ -1,7 +1,7 @@
 {# User submission thank you page  - contrib-thanks.html #}
 {% extends "base.html.j2" %}
 
-{# Force disable of autorefresh on this page #}
+{# Autoredirect to the home page after saying thanks #}
 {% block autorefresh %}
 <meta http-equiv="refresh" content="12; url=https://dailygrower.com"/>
 {% endblock autorefresh %}
@@ -11,10 +11,6 @@
 
 {% block sidebar %}
 {{ super() }}
-<hr>
-<div class="row">
-  <div class="col-md-12">{% include 'sidebar-welcome.html.j2' %}</div>
-</div>
 <hr>
 {% endblock sidebar %}
 
@@ -31,7 +27,7 @@
       <p class="user-form-text">We're gonna check it out.</p>
       <p class="user-form-text">Promise.</p>
       <p class="user-form-text">
-        Right you can click the link below to go back to
+        You can click the link below to go back to
         <i>The Daily Grower</i> <b>OR</b> you can just sit tight and we'll
         take you there auto-magically in a few seconds.
       </p>

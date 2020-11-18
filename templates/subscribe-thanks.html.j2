@@ -1,0 +1,42 @@
+{# User submission page  - contribute.html #}
+{% extends "base.html.j2" %}
+
+{# Autoredirect to the home page after saying thanks #}
+{% block autorefresh %}
+<meta http-equiv="refresh" content="12; url=https://dailygrower.com"/>
+{% endblock autorefresh %}
+
+{# Title for this page #}
+{% block title %}Thank you for subscribing to The Daily Grower{% endblock title %}
+
+{% block sidebar %}
+{{ super() }}
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-contribute.html.j2' %}</div>
+</div>
+<hr>
+{% endblock sidebar %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 p-2 justify-content-md-center">
+    <h3>Thank you for subscribing!</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 p-2">
+    <p>But what now? Here's a few options:
+    <ol>
+      <li>Make sure you look out for your first email soon. If you don't see it, search for dailygrower@mg.buttondown.email mark is as not spam.</li>
+      <li><a href="contribute.html">Contribute</a> a story or video or product that has changed your life to share with everyone.</li>
+      <li>Head back to the <a href="/">home</a> page for more Daily Grower goodness.</li>
+    </ol>
+    </p>
+    <p>
+      You can click the links above <b>OR</b> you can just sit tight and we'll
+      take you to the home page auto-magically in a few seconds.
+    </p>
+  </div>
+</div>
+{% endblock content %}
