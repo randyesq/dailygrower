@@ -1,0 +1,66 @@
+{# User subscribe page  - subscribe.html #}
+{% extends "base.html.j2" %}
+
+{# Force disable of autorefresh on this page #}
+{% block autorefresh %} {% endblock autorefresh %}
+
+{# Title for this page #}
+{% block title %}Subscribe to The Daily Grower{% endblock title %}
+
+{% block page_js %}
+<script type="text/javascript">
+$( document ).ready(function() {
+    // If the form does not have the recaptcha clicked, don't allow submission
+    $('#user-submit').click(function() {
+        var googleResponse = $('#g-recaptcha-response').val();
+        if (!googleResponse) {
+            $('#captcha-error').removeClass('d-none');
+            return false;
+        } else {            
+            return true;
+        }
+    });
+});
+</script>
+{% endblock page_js %}
+
+
+{% block sidebar %}
+{{ super() }}
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-contribute.html.j2' %}</div>
+</div>
+<hr>
+{% endblock sidebar %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <h5>Well hey there</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <p class="user-form-text">We're happy to have you subscribing to <i>The Daily Grower</i>!</p>
+      <p class="user-form-text">As a Daily Grower, here's what you can expect:</p>
+      <ul class="user-form-text">
+        <li>When we update <i>The Daily Grower</i> with new articles, videos, recipes, and products, you'll be the first to know right in your email!</li>
+        <li>From time to time we'll bring you exclusive access to special content and discounts on products that will bring you immense value as you grow better every day, and we'll share them with you!</li>
+        <li>As someone with some skin in the game, when you contribute your favorite content to <i>The Daily Grower</i>, we'll prioritize it to be featured.</li>
+      </ul>
+      <p class="user-form-text">Pretty awesome, eh?</p>
+      <p class="user-form-text">Thank you for becoming a Daily Grower, we are so happy to have you in our community.</p>
+      <p class="user-form-text">We promise you'll find value in the content we send your way or your money back! ;)</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <iframe scrolling="no" style="width:100%!important;height:220px;border:1px #ccc solid !important" src="https://buttondown.email/dailygrower?as_embed=true">
+      </iframe>
+      <br />
+      <br />
+    </div>
+  </div>
+{% endblock content %}

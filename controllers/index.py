@@ -37,12 +37,13 @@ tz = pytz.timezone('America/Chicago')
 # Template variables
 template_globals = {
     'now': datetime.datetime.now(tz),
+    'index_refresh_interval': 24*60*60 + 10*60,  # 24 hours plus 10 minutes
     'links': links,
     'ads': ads,
     'tags': get_link_tags(links),
     'links_per_page': LINKS_PER_PAGE,
     'link_pagination_pages': math.ceil(len(links) / LINKS_PER_PAGE),
-    'subscribe_url': 'https://buttondown.email/dailygrower',
+    'subscribe_url': 'subscribe.html',
     'ENABLE_GOOGLE_ADS': False,
     'ENABLE_GOOGLE_LINK_TRACKING': True,
     'ENABLE_TAGS': False,

@@ -3,7 +3,7 @@
 
 {% block autorefresh %}
 {% if ENABLE_AUTOREFRESH %}
-<meta http-equiv="refresh" content="600"/>
+<meta http-equiv="refresh" content="{{ index_refresh_interval }}"/>
 {% endif %}
 {% endblock autorefresh %}
 
@@ -11,8 +11,10 @@
 <script type="text/javascript" src="static/js/twbsPagination.js"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
+
+    // Pagination for home page links
     var $pagination = $('#pagination-demo');
-    var defaultOpts = {
+    var opts = {
         totalPages: {{ link_pagination_pages }},
         hideOnlyOnePage: true,
         loop: true,
@@ -25,7 +27,7 @@ $( document ).ready(function() {
             $('#link-page-' + page).removeClass('d-none');
         }
     };
-    $pagination.twbsPagination(defaultOpts);
+    $pagination.twbsPagination(opts);
 });
 </script>
 {% endblock page_js %}
