@@ -1,0 +1,112 @@
+{# About page  - contribute.html #}
+{% extends "base.html.j2" %}
+
+{# Force disable of autorefresh on this page #}
+{% block autorefresh %} {% endblock autorefresh %}
+
+{# Title for this page #}
+{% block title %}About The Daily Grower{% endblock title %}
+
+
+{% block sidebar %}
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-subscribe.html.j2' %}</div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-contribute.html.j2' %}</div>
+</div>
+{% endblock sidebar %}
+
+{% block content %}
+
+  <nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#what">What</a></li>
+        <li class="nav-item"><a class="nav-link" href="#why">Why</a></li>
+        <li class="nav-item"><a class="nav-link" href="#who">Who</a></li>
+        <li class="nav-item"><a class="nav-link" href="#how">How</a></li>
+        <li class="nav-item"><a class="nav-link" href="#disclosure">Privacy & Disclosure</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <a name="what"></a> 
+      <h5>What is The Daily Grower?</h5>
+      <p>
+        The <i>The Daily Grower</i> is the home of the best news, articles, vlogs, and recipes for homesteaders, small farmers, and growers of all kinds.
+        We curate content from around all the corners of the Internet in one place every day so you don't need have to waste your time clicking and
+        scrolling.
+      </p>
+      <p>
+        Best of all, <i>The Daily Grower</i> is <b>crowdsourced</b>. That means that anyone, including YOU, can <a href="contribute.html">contribute</a> to this site and help all
+        of us grow. We decided to call it the daily grower to focus on homesteaders and farmers who are growing animals, plants and food, but also everyone who
+        is looking to improve anything from health to finances, skillset to mindset. Our goal is for you to grow just a little bit better each day.
+      </p>
+      <p>
+        We also roll the stories featured on the web into a newsletter delivered directly to your inbox for those of you who prefer email.
+        It free and easy to join, just visit our <a href="subscribe.html">subscription</a> page and leave your email address. We're having fun
+        with it and for our special subscribers, you'll get to see the day's new stories first!
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <a name="what"></a>
+      <h5>Why The Daily Grower?</h5>
+      <p>
+      Content curation sites exist in the politics and finances arenas, but not really for homesteaders and small family farms. There is also a TON of
+      content out there for those interested in growing their skills. So much that it is easy to get overwhelmed. <i>The Daily Grower</i> is here to
+      help you sift through all of that and get the best value for your time scouring the Internet for the best.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <a name="who"></a>
+      <h5>Who is Behind The Daily Grower?</h5>
+      <p>
+        <i>The Daily Grower</i> was originally contrived by Randy Kleinman, a husband, dad, software engineer, tinkerer, web developer, and regenerative
+        farmer. Randy's tends to be a lifelong learner, and loves to research. More of a Jack of All Trades kind of guy, but sometimes lacking a little
+        confidence. Encouraged by his friends Justin Rhodes and Aaron Burquest, Randy decided to create <i>The Daily Grower</i> after seeing a need for
+        curated content in the homesteading and small farmer space.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <a name="how"></a>
+      <h5>How does the The Daily Grower Work?</h5>
+      <p>
+      This website and the newsletter are built with a couple of neat technologies. Here they are:
+      <ul>
+        <li><a href="https://www.python.org/">Python Programming Language</a></li>
+        <li><a href="https://palletsprojects.com/p/jinja/">Jinja Templating Engine</a></li>
+        <li><a href="https://www.netlify.com/">Netlify Deployment Platform</a></li>
+        <li><a href="https://airtable.com/">AirTable</a></li>
+        <li><a href="https://buttondown.email/">Buttondown</a></li>
+        <li><a href="https://getbootstrap.com/">Bootstrap</a></li>
+      </ul>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <a name="disclosure"></a>
+      <h5>Privacy & Disclosure</h5>
+      <p>
+        Some of the links on this site may be affiliate links. <i>The Daily Grower</i> is a participant in affiliate programs such as the Amazon Associates 
+        Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by linking to products we have vetted and 
+        trust. If you purchase a product through an affiliate link, your cost will be the same, but <i>The Daily Grower</i> will automatically receive a 
+        small commission. Your support is greatly appreciated and helps us spread our message! 
+      </p>
+    </div>
+  </div>
+{% endblock content %}

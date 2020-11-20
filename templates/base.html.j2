@@ -81,7 +81,7 @@
         <!-- Tagline -->
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-12 pt-3 text-center">
-            <p class="blog-header-tagline text-muted font-italic">Helping you grow better every day</p>
+            <p class="blog-header-tagline text-muted font-italic">Crowdsourced stories to help you grow better every day</p>
           </div>
         </div>
       </header>
@@ -120,11 +120,29 @@
       </div>
     </main><!-- /.main -->
 
-    <footer class="blog-footer">
-      {% block footer %}
-      <p>© {{ now.year }} <a href="https://dailygrower.com/">Daily Grower</a></p>
-      <p><a href="#">Back to top</a></p>
-      {% endblock footer %}
+    <footer class="pt-4 my-md-5 pt-md-5 border-top container">
+      <div class="row">
+        <div class="col-12 col-md">
+          <small class="d-block mb-3 text-muted">&copy; {{ now.year }} <a href="index.html"><i>The Daily Grower</i></a></small>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Get Involved</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="subscribe.html">Subscribe</a></li>
+            <li><a class="text-muted" href="contribute.html">Share a Link</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>About</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="about.html#what">What?</a></li>
+            <li><a class="text-muted" href="about.html#why">Why?</a></li>
+            <li><a class="text-muted" href="about.html#who">Who?</a></li>
+            <li><a class="text-muted" href="about.html#how">How?</a></li>
+            <li><a class="text-muted" href="about.html#disclose">Privacy & Disclosure</a></li>
+          </ul>
+        </div>
+      </div>
     </footer>
   </body>
 </html>
