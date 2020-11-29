@@ -17,4 +17,7 @@
   {% endfor %}
 </div>
 {% endif %}
+{% if TEMPLATE_NAME == "archive.html.j2" %}
+<p class="content-link-netloc">First appeared {{ link.fields['Approval Date'].strftime('%B, %d, %Y') }}</p>
+{% endif %}
 <p class="content-link-blurb">{{ link.fields.Blurb }}</p>

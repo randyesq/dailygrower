@@ -1,0 +1,103 @@
+{# Home Page  - index.html #}
+{% extends "base.html.j2" %}
+
+{% block title %}Archive - {% endblock title %}
+
+{% block page_js %}
+<script type="text/javascript" src="static/js/twbsPagination.js"></script>
+<script type="text/javascript">
+$( document ).ready(function() {
+
+    // Pagination for home page links
+    var $pagination = $('#pagination-demo');
+    var opts = {
+        totalPages: {{ link_pagination_pages }},
+        hideOnlyOnePage: true,
+        loop: true,
+        first: "<<",
+        prev: "<",
+        last: ">>",
+        next: ">",
+        onPageClick: function (evt, page) {
+            $('.link-page').addClass('d-none');
+            $('#link-page-' + page).removeClass('d-none');
+        }
+    };
+    $pagination.twbsPagination(opts);
+});
+</script>
+{% endblock page_js %}
+
+{% block page_title %}The Daily Grower Archives{% endblock page_title %}
+
+{% block content %}
+
+<div class="row pt-2">
+    <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+        You are viewing <i>The Daily Grower</i>'s archives. To view the latest stories, go to the  <a href="index.html">main page</a>.
+        </div>
+    </div>
+</div>
+
+{% for link_list in links | batch(links_per_page) %}
+  {% set rowloop = loop %}
+  <div class="link-page" id="link-page-{{ rowloop.index }}">
+    {% for link in link_list %}
+    <div class="row">
+      <div class="col-md-12">{% include 'link.html.j2' %}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+{# Google Ad space #}
+{% if ENABLE_GOOGLE_ADS %}
+<div class="row">
+  <div class="col-md-12">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- Daily Grower Horizontal Ad -->
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3256029525911021" data-ad-slot="1123722288" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+{% endif %}
+  <hr>
+
+{# Pagination #}
+{% if link_pagination_pages > 1 %}
+<div class="row pt-2">
+  <div class="col-md-12 text-center">
+    <p>But wait, there's more...</p>
+  </div>
+</div>
+<div id="pagination-row" class="row">
+  <div class="col-md-12">
+    <nav aria-label="Page navigation">
+      <ul id="pagination-demo" class="pagination justify-content-center"></ul>
+    </nav>
+  </div>
+</div>
+<div class="row pt-2">
+    <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+        You are viewing <i>The Daily Grower</i>'s archives. To view the latest stories, go to the  <a href="index.html">main page</a>.
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
+
+{% block sidebar %}
+{{ super() }}
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-subscribe.html.j2' %}</div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-contribute.html.j2' %}</div>
+</div>
+{% endblock sidebar %}
