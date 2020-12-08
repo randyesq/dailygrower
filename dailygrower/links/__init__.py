@@ -1,5 +1,5 @@
 from datetime import datetime
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qsl
 
 def weight_links(links):
     """
@@ -30,4 +30,17 @@ def parse_netloc(links):
     """
     for link in links:
         link['netloc'] = urlparse(link['fields']['Link']).netloc
+    return links
+
+def fetch_youtube_images(links):
+    """
+    If the link is a youtube video, fetch its youtube thumbnail image
+    """
+    for link in links:
+        if 'youtu' in link['netloc']:
+            query = urlparse(link['fields']['Link']).netloc
+            vid = dict(parse_qsl(urlparse(link['fields']['Link']).query))['v']
+            link['image'] = "https://i.ytimg.com/vi/{}/hqdefault.jpg".format(vid)
+        else:
+            link['image'] = None
     return links

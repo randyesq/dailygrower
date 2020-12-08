@@ -7,7 +7,7 @@ from jinja2 import Environment, FileSystemLoader
 import pytz
 
 from dailygrower.airtable import fetch_links, get_link_tags
-from dailygrower.links import weight_links, parse_netloc
+from dailygrower.links import weight_links, parse_netloc, fetch_youtube_images
 
 template_name = os.environ.get('TEMPLATE_NAME', 'index.html.j2')
 fetch_links_from_db = os.environ.get('FETCH_LINKS', False)
@@ -18,7 +18,6 @@ env = Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True
 )
-
 
 # Fetch the links and advertisements from the database
 links = []
@@ -31,6 +30,7 @@ if fetch_links_from_db:
         links = fetch_links(view="Archived", table="Content")
     links = weight_links(links)
     links = parse_netloc(links)
+    links = fetch_youtube_images(links)
 
 # Pagination
 if template_name == "index.html.j2":
