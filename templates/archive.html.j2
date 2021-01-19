@@ -11,7 +11,7 @@ $( document ).ready(function() {
     // Pagination for home page links
     var $pagination = $('#pagination-demo');
     var opts = {
-        totalPages: {{ link_pagination_pages }},
+        totalPages: {{ num_link_pages }},
         hideOnlyOnePage: true,
         loop: true,
         first: "<<",
@@ -40,12 +40,16 @@ $( document ).ready(function() {
     </div>
 </div>
 
-{% for link_list in links | batch(links_per_page) %}
+{% for link_list in links | batch(archive_links_per_page) %}
   {% set rowloop = loop %}
   <div class="link-page" id="link-page-{{ rowloop.index }}">
     {% for link in link_list %}
     <div class="row">
-      <div class="col-md-12">{% include 'link.html.j2' %}</div>
+      <div class="col-md-12">
+        {% with link_page_type = "archive" %}
+          {% include 'link.html.j2' %}
+        {% endwith %}
+      </div>
     </div>
     {% endfor %}
   </div>
@@ -67,7 +71,7 @@ $( document ).ready(function() {
   <hr>
 
 {# Pagination #}
-{% if link_pagination_pages > 1 %}
+{% if num_link_pages > 1 %}
 <div class="row pt-2">
   <div class="col-md-12 text-center">
     <p>But wait, there's more...</p>
