@@ -1,4 +1,4 @@
-{# Home Page  - index.html #}
+{# Archive Page  - archive.html #}
 {% extends "base.html.j2" %}
 
 {% block title %}Archive - {% endblock title %}
@@ -8,10 +8,10 @@
 <script type="text/javascript">
 $( document ).ready(function() {
 
-    // Pagination for home page links
+    // Pagination for archive page links
     var $pagination = $('#pagination-demo');
     var opts = {
-        totalPages: {{ link_pagination_pages }},
+        totalPages: {{ num_link_pages }},
         hideOnlyOnePage: true,
         loop: true,
         first: "<<",
@@ -35,17 +35,21 @@ $( document ).ready(function() {
 <div class="row pt-2">
     <div class="col-md-12">
         <div class="alert alert-info" role="alert">
-        You are viewing <i>The Daily Grower</i>'s archives. To view the latest stories, go to the  <a href="index.html">main page</a>.
+        You are viewing <i>The Daily Grower</i>'s archives. To view the latest stories, go to the <a href="{{ internal_pages.main }}">main page</a>.
         </div>
     </div>
 </div>
 
-{% for link_list in links | batch(links_per_page) %}
+{% for link_list in links | batch(5) %}
   {% set rowloop = loop %}
   <div class="link-page" id="link-page-{{ rowloop.index }}">
     {% for link in link_list %}
     <div class="row">
-      <div class="col-md-12">{% include 'link.html.j2' %}</div>
+      <div class="col-md-12">
+        {% with link_page_type = "archive" %}
+          {% include 'link.html.j2' %}
+        {% endwith %}
+      </div>
     </div>
     {% endfor %}
   </div>
@@ -67,7 +71,7 @@ $( document ).ready(function() {
   <hr>
 
 {# Pagination #}
-{% if link_pagination_pages > 1 %}
+{% if num_link_pages > 1 %}
 <div class="row pt-2">
   <div class="col-md-12 text-center">
     <p>But wait, there's more...</p>
@@ -83,7 +87,7 @@ $( document ).ready(function() {
 <div class="row pt-2">
     <div class="col-md-12">
         <div class="alert alert-info" role="alert">
-        You are viewing <i>The Daily Grower</i>'s archives. To view the latest stories, go to the  <a href="index.html">main page</a>.
+        You are viewing <i>The Daily Grower</i>'s archives. To view the latest stories, go to the  <a href="{{ internal_pages.main }}">main page</a>.
         </div>
     </div>
 </div>

@@ -1,17 +1,35 @@
 #!/usr/bin/env bash
+# Daily Grower Build and Deploy Script
 
-export OUTPUT_DIR=output
+# Install app dependencies
 export PYTHONPATH=`pwd`
-
-rm -rf ${OUTPUT_DIR} && mkdir -p ${OUTPUT_DIR}/static
 pip3 install -r requirements.txt
+
+# Set the build type, default to a weekday build
+: "${BUILD_TYPE:=weekday}"
+
+# Set the deploy type, default to the production config
+: "${DEPLOY_TYPE:=production}"
+
+# Prime build environment
+export OUTPUT_DIR=output
+rm -rf ${OUTPUT_DIR} && mkdir -p ${OUTPUT_DIR}/static
 cp -r static/* ${OUTPUT_DIR}/static
-echo "Rendering template: index.html.j2"
-TEMPLATE_NAME=index.html.j2 FETCH_LINKS=true python3 controllers/index.py
-echo "Rendering template: archive.html.j2"
-TEMPLATE_NAME=archive.html.j2 FETCH_LINKS=true python3 controllers/index.py
-for template in about.html.j2 contribute.html.j2 contrib-thanks.html.j2 subscribe.html.j2 subscribe-thanks.html.j2
-do
-    echo "Rendering template: ${template}"
-    TEMPLATE_NAME=${template} python3 controllers/index.py
-done
+
+# Go on, Build it
+case ${BUILD_TYPE} in
+
+    "weekday")
+        echo "Executing weekday-type build " date
+        python3 deploy.py
+        ;;
+
+    "rollup")
+        echo "Executing rollup-type build " date
+        ;;
+
+    "sabbath")
+        echo "Executing sabbath-type build " date
+        ;;
+
+esac

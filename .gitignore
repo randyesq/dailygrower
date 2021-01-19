@@ -1,6 +1,9 @@
 # Dev output directory
 output
 
+# MS Visual Studio Code content
+.vscode
+workspace.code-workspace
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
