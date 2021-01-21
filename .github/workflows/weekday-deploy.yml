@@ -1,8 +1,8 @@
-# This is a basic workflow to deploy the daily grower website every morning at 3am Central
-name: weekday-main-deploy
+# This is a basic workflow do the "weekday" build of the daily grower website
+# every morning at 3am Central
+name: weekday-deploy
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
+# Controls when the action will run.
 on:
   workflow_dispatch:
   schedule:

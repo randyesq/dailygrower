@@ -3,12 +3,24 @@ import os
 
 from dailygrower.airtable import LinksAirtableView, get_next_link
 from dailygrower.render import render_full_site
+from dailygrower.email import send_daily_link_email
 
-AIRTABLE_API_KEY = os.environ.get('AIRTABLE_API_KEY')
+
+def deploy_render(config):
+    """
+    Deploy a site without making any automatic changes to links, just
+    re-render the templates
+    """
+    link_content = _get_link_views(config, archived=True)
+
+    # Render Site
+    render_full_site(config, link_content=link_content)
 
 
 def deploy_weekday(config):
-    """ Deploy a weekday site """
+    """
+    Weekday deploy, pull a pending story off the shelf and send daily email
+    """
     link_content = _get_link_views(config, True, True, True)
 
     # Get the next link to be featured this week
@@ -16,13 +28,10 @@ def deploy_weekday(config):
 
     # Update that link to be current
     if next_link:
-        link_content['pending'].approve_record(next_link)
+        link_content['pending'].approve_records(next_link)
 
-    # Render Site
-    render_full_site(config, link_content=link_content)
-
-    # Create subscriber email
-    #send_daily_link_email(next_link)
+        # Create subscriber email
+        send_daily_link_email(config, next_link)
 
 
 def deploy_rollup(config):
@@ -52,17 +61,17 @@ def _get_link_views(config, pending=False, current=True, archived=False):
     link_content = {}
     if pending:
         link_content['pending'] = LinksAirtableView(
-            config['base_id'], config['content_table'], config['pending_view'], AIRTABLE_API_KEY
+            config['base_id'], config['content_table'], config['pending_view']
         )
 
     if current:
         link_content['current'] = LinksAirtableView(
-            config['base_id'], config['content_table'], config['current_view'], AIRTABLE_API_KEY
+            config['base_id'], config['content_table'], config['current_view']
         )
 
     if archived:
         link_content['archived'] = LinksAirtableView(
-            config['base_id'], config['content_table'], config['archived_view'], AIRTABLE_API_KEY
+            config['base_id'], config['content_table'], config['archived_view']
         )
 
     return link_content

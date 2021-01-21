@@ -1,0 +1,24 @@
+# Happy {{ now.strftime('%A') }} to you fellow Daily Grower!
+Enjoy today's link{% if links|length > 1 %}s{% endif %} showcasing the best of the best in the world of homesteading, farming, and personal growth!
+
+[Did a friend forward you this? Click here to subscribe and become a Daily Grower. It's totally free with a money-back guarantee!](https://dailygrower.com/{{ internal_pages.subscribe }})
+
+---
+
+And now for *today's* stor{% if links|length > 1 %}ies{% else %}y{% endif %}:
+
+{% for link in links %}
+- [{{ link.fields.Headline | title }}]({{ link.fields.Link }}) [{{ link.fields.Link | netloc }}] -- {{ link.fields.Blurb}}
+
+{% endfor %}
+
+[Did you find or create a great article/vlog/recipe/whatever worth sharing? Click HERE to send it our way.](https://dailygrower.com/{{ internal_pages.contribute }})
+
+---
+
+That's all for now, go on and have a great {{ now.strftime('%A') }}.!
+Randy @ The Daily Grower
+
+P.S. Know someone who would enjoy The Daily Grower? Just forward them this email! They will thank you!
+
+To make sure you keep getting these emails, please add or whitelist *dailygrower@mg.buttondown.email* in your email client.

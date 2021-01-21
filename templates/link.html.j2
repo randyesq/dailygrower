@@ -9,7 +9,7 @@
 {% endif %}
 <a class="content-link" href="{{ link.fields.Link }}"
     {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.fields.Link }}'); return false;"{% endif %}>
-    {% if link_page_type == "index" %}{{ link | approval_day }} - {% endif %}{{ link.fields.Headline|title }}
+    {% if link_page_type == "index" %}{{ link | approval_day(timezone) }} - {% endif %}{{ link.fields.Headline|title }}
 </a>
 {% if ENABLE_LINK_NETLOC %}<span class="content-link-netloc">({{ link.fields.Link | netloc }})</span>{% endif %}
 {% if link_page_type == "archive" %}

@@ -90,7 +90,8 @@ def render_link_content(config, link_content):
 def construct_global_data(config):
     """ Create the global template variables """
     return {
-        'now': datetime.datetime.now(pytz.timezone('America/Chicago')),
+        'timezone': config['timezone'],
+        'now': datetime.datetime.now(pytz.timezone(config['timezone'])),
         'index_refresh_interval': config.get('PAGE_REFRESH_INTERVAL_SECONDS'),
         'internal_pages': {
             'about': 'about.html',
@@ -103,5 +104,6 @@ def construct_global_data(config):
         'ENABLE_GOOGLE_LINK_TRACKING': config.getboolean('ENABLE_GOOGLE_LINK_TRACKING'),
         'ENABLE_TAGS': config.getboolean('ENABLE_TAGS'),
         'ENABLE_LINK_NETLOC': config.getboolean('ENABLE_LINK_NETLOC'),
-        'ENABLE_AUTOREFRESH': config.getboolean('ENABLE_AUTOREFRESH')
+        'ENABLE_AUTOREFRESH': config.getboolean('ENABLE_AUTOREFRESH'),
+        'reply_to_address': config['reply_to_address'],
     }

@@ -1,4 +1,5 @@
 # Airtable module
+import os
 import datetime
 import posixpath
 from urllib.parse import urljoin
@@ -8,6 +9,7 @@ import requests
 
 AIRTABLE_API_BASE_URL = "https://api.airtable.com"
 AIRTABLE_API_VERSION = "v0"
+AIRTABLE_API_KEY = os.environ.get('AIRTABLE_API_KEY')
 
 
 class BearerAuth(requests.auth.AuthBase):
@@ -18,30 +20,10 @@ class BearerAuth(requests.auth.AuthBase):
         return r
 
 
-def fetch_links(base_id="app79OUH4JFgpGic3", view="Live", table="Content", api_key="keyYyJtgn4NboX8b7"):
-    """ Fetch the links from the `view` view and the `table` table. """
-    url_path = posixpath.join(AIRTABLE_API_VERSION, base_id, table)
-    url = urljoin(AIRTABLE_API_BASE_URL, url_path)
-    r = requests.get(url, params={'view': view, 'userLocale': 'America/Chicago'}, auth=BearerAuth(api_key))
-    records = r.json()['records']
-    for rec in records:
-        if 'Approval Date' in rec['fields']:
-            rec['fields']['Approval Date'] = datetime.datetime.strptime(rec['fields']['Approval Date'], '%Y-%m-%dT%H:%M:%S.000Z')
-    return records
-
-
-def get_link_tags(links):
-    """ From the list of links, get the tags """
-    tags = set()
-    for link in links:
-        tags.update(link['fields']['Link Tags'])
-    return tags
-
-
 class LinksAirtableView(object):
     """ A class for interacting with AirTable Views """
 
-    def __init__(self, base_id, table, view, api_key):
+    def __init__(self, base_id, table, view, api_key=AIRTABLE_API_KEY):
         self.base_id = base_id
         self.table = table
         self.view = view
@@ -67,18 +49,21 @@ class LinksAirtableView(object):
         records = r.json()['records']
         return self.sanitize_records(list(records))
 
-    def approve_record(self, record):
-        """ Approve a record in the table """
+    def approve_records(self, records):
+        """ Approve records in the table """
         url = self._get_table_url()
-        r = requests.patch(
-            url,
-            auth=self.auth,
-            json={
-                "records": [{"id": record["id"], "fields": { "Approved": True }}]
-            }
-        )
-        r.raise_for_status()
-        return self.sanitize_records([r.json()['records'][0]])
+        patched_records = []
+        for record in records:
+            r = requests.patch(
+                url,
+                auth=self.auth,
+                json={
+                    "records": [{"id": record["id"], "fields": { "Approved": True }}]
+                }
+            )
+            r.raise_for_status()
+            patched_records.append(r.json()['records'][0])
+        return self.sanitize_records(patched_records)
 
     def sanitize_records(self, records):
         """ Pythonize fields that don't convert from the JSON """
@@ -116,11 +101,11 @@ def get_next_link(records):
 
     # return the newest one
     if featured:
-        return featured[-1]
+        return [featured[-1]]
 
     # Return the oldest of the links since none are featured
     pending = sorted(
         [record for record in records],
         key=lambda x: (x['createdTime'])
     )
-    return pending[0]
+    return [pending[0]]

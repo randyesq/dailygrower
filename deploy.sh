@@ -19,17 +19,22 @@ cp -r static/* ${OUTPUT_DIR}/static
 # Go on, Build it
 case ${BUILD_TYPE} in
 
+    "render")
+        echo "Executing render-type build " `date`
+        python3 deploy.py
+        ;;
+
     "weekday")
-        echo "Executing weekday-type build " date
+        echo "Executing weekday-type build " `date`
         python3 deploy.py
         ;;
 
     "rollup")
-        echo "Executing rollup-type build " date
+        echo "Executing rollup-type build " `date`
         ;;
 
     "sabbath")
-        echo "Executing sabbath-type build " date
+        echo "Executing sabbath-type build " `date`
         ;;
 
 esac
