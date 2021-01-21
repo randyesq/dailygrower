@@ -1,0 +1,2 @@
+# Requirements for the Netlify portion of the deploy
+google-cloud-storage

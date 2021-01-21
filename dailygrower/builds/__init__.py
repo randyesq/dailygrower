@@ -6,9 +6,9 @@ from dailygrower.render import render_full_site
 from dailygrower.email import send_daily_link_email
 
 
-def deploy_render(config):
+def build_render(config):
     """
-    Deploy a site without making any automatic changes to links, just
+    Render a site without making any automatic changes to links, just
     re-render the templates
     """
     link_content = _get_link_views(config, archived=True)
@@ -17,9 +17,9 @@ def deploy_render(config):
     render_full_site(config, link_content=link_content)
 
 
-def deploy_weekday(config):
+def build_weekday(config):
     """
-    Weekday deploy, pull a pending story off the shelf and send daily email
+    Weekday build, pull a pending story off the shelf and send daily email
     """
     link_content = _get_link_views(config, True, True, True)
 
@@ -34,8 +34,8 @@ def deploy_weekday(config):
         send_daily_link_email(config, next_link)
 
 
-def deploy_rollup(config):
-    """ Deploy a rollup site, typically a Saturday """
+def build_rollup(config):
+    """ Rollup build, send weekly digest email """
     link_content = _get_link_views(config, archived=True)
 
     # Render Site
@@ -45,8 +45,8 @@ def deploy_rollup(config):
     #send_weekly_rollup_link_email(next_link)
 
 
-def deploy_sabbath(config):
-    """ Deploy a sabbath site, typically a Sunday """
+def build_sabbath(config):
+    """ Sabbath build, archive the previous week's posts, typically a Sunday """
     link_content = _get_link_views(config, archived=True)
 
     # Render Site

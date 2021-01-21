@@ -1,0 +1,55 @@
+# This is a basic workflow to render the daily grower website every morning at
+# 5am Central and upload it to Google Cloud Storage
+
+name: Render Site (Production)
+
+on:
+#  push:
+#    branches: [ main ]
+
+  workflow_dispatch:
+  schedule:
+  - cron: "0 11 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get the current branch name
+      shell: bash
+      run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+      id: branch_name
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements-build.txt ]; then pip install -r requirements-build.txt; fi
+
+    - name: Run a render deployment
+      env:
+        AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+        BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+        BUILD_TYPE: render
+        DEPLOY_TYPE: production
+      run: |
+        ./deploy.sh && tar cvf site.tar output/
+    - name: Upload artifacts to Google Cloud Storage
+      uses: google-github-actions/upload-cloud-storage@v0.2.0
+      with:
+        credentials: ${{ secrets.GCP_CREDENTIALS_GITHUB_DEPLOY }}
+        path: site.tar
+        destination: dailygrower-site/${{ steps.branch_name.outputs.branch }}
+
+    - name: Kick off Netlify Build/Deploy
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: 'https://api.netlify.com/build_hooks/5fb0bcf3f71623a5bcd95256?trigger_branch=${{ steps.branch_name.outputs.branch }}&trigger_title=github+render+production'
+        method: 'POST'
+        data: '{"BRANCH": "${{ steps.branch_name.outputs.branch }}"}'

@@ -1,0 +1,40 @@
+# This is a basic workflow to prepare the featured link every weekday morning
+# at 3am Central and call Buttondown to send it
+
+name: Weekday Build (Production)
+
+on:
+
+  workflow_dispatch:
+  schedule:
+  - cron: "0 9 * * 1-5"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get the current branch name
+      shell: bash
+      run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+      id: branch_name
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements-build.txt ]; then pip install -r requirements-build.txt; fi
+
+    - name: Run a weekday deployment
+      env:
+        AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+        BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+        BUILD_TYPE: weekday
+        DEPLOY_TYPE: production
+      run: |
+        ./deploy.sh
