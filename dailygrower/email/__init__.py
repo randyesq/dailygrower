@@ -27,3 +27,4 @@ def send_daily_link_email(config, links):
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
     r.raise_for_status()
+    print("Daily email creation response %s" % r.text)

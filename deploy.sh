@@ -16,17 +16,20 @@ export OUTPUT_DIR=output
 rm -rf ${OUTPUT_DIR} && mkdir -p ${OUTPUT_DIR}/static
 cp -r static/* ${OUTPUT_DIR}/static
 
+echo "Here is the incoming book body"
+echo ${INCOMING_HOOK_BODY}
+
 # Go on, Build it
 case ${BUILD_TYPE} in
 
     "render")
         echo "Executing render-type build " `date`
-        python3 deploy.py
+#        python3 deploy.py
         ;;
 
     "weekday")
         echo "Executing weekday-type build " `date`
-        python3 deploy.py
+#        python3 deploy.py
         ;;
 
     "rollup")
