@@ -3,7 +3,7 @@ import os
 
 from dailygrower.airtable import LinksAirtableView, get_next_link
 from dailygrower.render import render_full_site
-from dailygrower.email import send_daily_link_email
+from dailygrower.email import send_daily_link_email, send_weekly_rollup_email
 
 
 def build_render(config):
@@ -28,21 +28,18 @@ def build_weekday(config):
 
     # Update that link to be current
     if next_link:
-        link_content['pending'].approve_records(next_link)
+        #link_content['pending'].approve_records(next_link)
 
-        # Create subscriber email
+        # Create daily digest subscriber email
         send_daily_link_email(config, next_link)
 
 
 def build_rollup(config):
-    """ Rollup build, send weekly digest email """
-    link_content = _get_link_views(config, archived=True)
+    """ Rollup build, send weekly digest email, typically a Saturday """
+    link_content = _get_link_views(config)
 
-    # Render Site
-    render_full_site(config, link_content=link_content)
-
-    # Create subscriber email
-    #send_weekly_rollup_link_email(next_link)
+    # Create weekly digest subscriber email
+    send_weekly_rollup_email(config, link_content['current'].get_view_records())
 
 
 def build_sabbath(config):

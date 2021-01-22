@@ -5,8 +5,7 @@ Main build entrance for the Daily Grower site
 import configparser
 import os
 
-from dailygrower.builds import build_rollup, build_sabbath, \
-    build_weekday, build_render
+from dailygrower.builds import build_rollup, build_sabbath, build_weekday, build_render
 
 # Gather build and deploy types from the environment
 BUILD_TYPE = os.environ.get("BUILD_TYPE", "render").lower()
