@@ -1,13 +1,13 @@
-# This is a basic workflow to prepare the featured link every weekday morning
-# at 3am Central and call Buttondown to send it
+# This is a basic workflow to prepare the weekly digest email every Saturday
+# morning at 3am Central and call Buttondown to send it
 
-name: Weekday Build (Production)
+name: Rollup Build (Production)
 
 on:
 
   workflow_dispatch:
   schedule:
-  - cron: "0 9 * * 1-5"
+  - cron: "0 9 * * 6"
 
 jobs:
   build:
@@ -30,11 +30,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements-build.txt ]; then pip install -r requirements-build.txt; fi
 
-    - name: Run a weekday deployment
+    - name: Run a rollup build
       env:
         AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
         BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
-        BUILD_TYPE: weekday
+        BUILD_TYPE: rollup
         DEPLOY_TYPE: production
       run: |
         ./build.sh

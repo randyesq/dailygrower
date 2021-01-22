@@ -11,7 +11,7 @@ import os
 from jinja2 import Environment, FileSystemLoader
 import pytz
 
-from dailygrower.render.filters import netloc, approval_day
+from dailygrower.render.filters import netloc, approval_day, make_ordinal
 
 # Template rendering output directory
 OUTPUT_DIR = Path(os.environ.get(
@@ -28,6 +28,7 @@ ENV = Environment(
 )
 ENV.filters['netloc'] = netloc
 ENV.filters['approval_day'] = approval_day
+ENV.filters['make_ordinal'] = make_ordinal
 
 # Static templates that don't need content from DBs
 STATIC_TEMPLATES = [

@@ -39,7 +39,7 @@ jobs:
         BUILD_TYPE: render
         DEPLOY_TYPE: production
       run: |
-        ./deploy.sh && tar cvf site.tar output/
+        ./build.sh && tar cvf site.tar output/
     - name: Upload artifacts to Google Cloud Storage
       uses: google-github-actions/upload-cloud-storage@v0.2.0
       with:

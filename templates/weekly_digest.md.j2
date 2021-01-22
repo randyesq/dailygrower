@@ -1,0 +1,22 @@
+{# Weekly Digest - weekly_digest.md #}
+{% extends "email_digest_base.md.j2" %}
+
+{% block title %}
+# Good morning to you fellow Daily Grower!
+{% endblock title %}
+
+{% block greeting %}
+Congrats on making it through the {{ now.strftime("%U") | make_ordinal }} week of the year. Enjoy this week's link{% if links|length > 1 %}s{% endif %} showcasing the best of the best in the world of homesteading, farming, and personal growth!
+{% endblock greeting %}
+
+{% block message_body %}
+And now for stor{% if links|length > 1 %}ies{% else %}y{% endif %} featured this past week:
+
+{% for link in links %}
+- [{{ link.fields.Headline | title }}]({{ link.fields.Link }}) [{{ link.fields.Link | netloc }}] -- {{ link.fields.Blurb}}
+{% endfor %}
+{% endblock message_body %}
+
+{% block salutation %}
+That's all for now, go on and enjoy your weekend! As always we appreciate your support.
+{% endblock salutation %}
