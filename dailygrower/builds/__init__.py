@@ -28,7 +28,7 @@ def build_weekday(config):
 
     # Update that link to be current
     if next_link:
-        #link_content['pending'].approve_records(next_link)
+        link_content['pending'].approve_records(next_link)
 
         # Create daily digest subscriber email
         send_daily_link_email(config, next_link)
@@ -44,13 +44,10 @@ def build_rollup(config):
 
 def build_sabbath(config):
     """ Sabbath build, archive the previous week's posts, typically a Sunday """
-    link_content = _get_link_views(config, archived=True)
-
-    # Render Site
-    render_full_site(config, link_content=link_content)
+    link_content = _get_link_views(config)
 
     # Archive this week's posts
-    #archive_current_posts(config, current)
+    link_content['current'].archive_records()
 
 
 def _get_link_views(config, pending=False, current=True, archived=False):
