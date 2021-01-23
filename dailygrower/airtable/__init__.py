@@ -65,6 +65,22 @@ class LinksAirtableView(object):
             patched_records.append(r.json()['records'][0])
         return self.sanitize_records(patched_records)
 
+    def archive_records(self, records):
+        """ Archive records in the table """
+        url = self._get_table_url()
+        patched_records = []
+        for record in records:
+            r = requests.patch(
+                url,
+                auth=self.auth,
+                json={
+                    "records": [{"id": record["id"], "fields": { "Archived": True }}]
+                }
+            )
+            r.raise_for_status()
+            patched_records.append(r.json()['records'][0])
+        return self.sanitize_records(patched_records)
+
     def sanitize_records(self, records):
         """ Pythonize fields that don't convert from the JSON """
         for rec in records:
