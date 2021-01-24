@@ -84,6 +84,9 @@ class LinksAirtableView(object):
     def sanitize_records(self, records):
         """ Pythonize fields that don't convert from the JSON """
         for rec in records:
+            for field in rec['fields']:
+                if isinstance(rec['fields'][field], str):
+                    rec['fields'][field] = rec['fields'][field].strip()
             if 'Approval Date' in rec['fields']:
                 rec['fields']['Approval Date'] = datetime.datetime.strptime(
                     rec['fields']['Approval Date'],
