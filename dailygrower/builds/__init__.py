@@ -47,7 +47,8 @@ def build_sabbath(config):
     link_content = _get_link_views(config)
 
     # Archive this week's posts
-    link_content['current'].archive_records()
+    posts = link_content['current'].get_view_records()
+    link_content['current'].archive_records(posts)
 
 
 def _get_link_views(config, pending=False, current=True, archived=False):
