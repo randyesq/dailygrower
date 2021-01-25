@@ -88,7 +88,7 @@ if __name__ == "__main__":
     publish_response = requests.post(
         NETLIFY_SITE_DEPLOYS_RESTORE_URL.format(SITE_ID,deploy_id),
         auth=auth,
-        headers={"Content-type": "application/json"}
+        json={}
     )
     print(publish_response.text)
     publish_response.raise_for_status()
