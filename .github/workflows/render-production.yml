@@ -51,6 +51,8 @@ jobs:
     - name: Deploy to Netlify
       env:
         OUTPUT_DIR: output
+        NETLIFY_PERSONAL_ACCESS_TOKEN: ${{ secrets.NETLIFY_PERSONAL_ACCESS_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         BRANCH: ${{ steps.branch_name.outputs.branch }}
       run: |
         python3 ./deploy-netlify.py
