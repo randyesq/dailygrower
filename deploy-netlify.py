@@ -73,6 +73,7 @@ if __name__ == "__main__":
 
     # For every file that Netlify wants, upload it
     deploy_id = deploy_response.json()['id']
+    print("deploy id=%s" % deploy_id)
     for reqd_sha1 in deploy_response.json()['required']:
         print("Uploading", deploy_sha1_fullpath[reqd_sha1])
         with open(deploy_sha1_fullpath[reqd_sha1], 'rb') as payload:
@@ -86,7 +87,7 @@ if __name__ == "__main__":
 
     # I guess everything went fine, so update the deploy to be published
     publish_response = requests.post(
-        NETLIFY_SITE_DEPLOYS_RESTORE_URL.format(SITE_ID,deploy_id),
+        NETLIFY_SITE_DEPLOYS_RESTORE_URL.format(SITE_ID, deploy_id),
         auth=auth,
         json={}
     )
