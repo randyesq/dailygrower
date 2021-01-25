@@ -68,6 +68,7 @@ if __name__ == "__main__":
         },
         auth=auth,
     )
+    print(deploy_response.text)
     deploy_response.raise_for_status()
 
     # For every file that Netlify wants, upload it
@@ -80,6 +81,7 @@ if __name__ == "__main__":
                 auth=auth,
                 data=payload
             )
+            print(upload_response.text)
             upload_response.raise_for_status()
 
     # I guess everything went fine, so update the deploy to be published
@@ -87,4 +89,5 @@ if __name__ == "__main__":
         NETLIFY_SITE_DEPLOYS_RESTORE_URL.format(SITE_ID,deploy_id),
         auth=auth,
     )
+    print(publish_response.text)
     publish_response.raise_for_status()
