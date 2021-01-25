@@ -53,5 +53,4 @@ jobs:
         OUTPUT_DIR: output
         BRANCH: ${{ steps.branch_name.outputs.branch }}
       run: |
-        python3 ./netlify-deploy.py
-
+        python3 ./deploy-netlify.py
