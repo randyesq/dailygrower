@@ -7,6 +7,7 @@ import hashlib
 import os
 import pathlib
 import pprint
+import time
 import urllib.parse
 
 import requests
@@ -86,6 +87,7 @@ if __name__ == "__main__":
             upload_response.raise_for_status()
 
     # I guess everything went fine, so update the deploy to be published
+    time.sleep(5)
     publish_response = requests.post(
         NETLIFY_SITE_DEPLOYS_RESTORE_URL.format(SITE_ID, deploy_id),
         auth=auth,
