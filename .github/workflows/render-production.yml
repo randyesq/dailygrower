@@ -40,6 +40,7 @@ jobs:
         DEPLOY_TYPE: production
       run: |
         ./build.sh && tar cvf site.tar output/
+
     - name: Upload artifacts to Google Cloud Storage
       uses: google-github-actions/upload-cloud-storage@v0.2.0
       with:
@@ -47,9 +48,9 @@ jobs:
         path: site.tar
         destination: dailygrower-site/${{ steps.branch_name.outputs.branch }}
 
-    - name: Kick off Netlify Build/Deploy
-      uses: fjogeleit/http-request-action@master
-      with:
-        url: 'https://api.netlify.com/build_hooks/5fb0bcf3f71623a5bcd95256?trigger_branch=${{ steps.branch_name.outputs.branch }}&trigger_title=github+render+production'
-        method: 'POST'
-        data: '{"BRANCH": "${{ steps.branch_name.outputs.branch }}"}'
+    - name: Deploy to Netlify
+      env:
+        OUTPUT_DIR: output
+        BRANCH: ${{ steps.branch_name.outputs.branch }}
+      run: |
+        python3 ./netlify-deploy.sh
