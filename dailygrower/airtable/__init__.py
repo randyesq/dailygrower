@@ -2,7 +2,7 @@
 import os
 import datetime
 import posixpath
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse, parse_qsl
 
 import requests
 
@@ -97,7 +97,21 @@ class LinksAirtableView(object):
                     rec['createdTime'],
                     '%Y-%m-%dT%H:%M:%S.000Z'
                 )
+            if 'Image URL' not in rec['fields']:
+                rec['fields']['Image URL'] = auto_fetch_images(rec['fields'])
         return records
+
+
+def auto_fetch_images(fields):
+    """
+    Fetch an image from an automatic source, if possible. Right now only works
+    with YouTube videos.
+    # https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
+    """
+    if 'youtu' in urlparse(fields['Link']).netloc:
+        vid = dict(parse_qsl(urlparse(fields['Link']).query))['v']
+        return 'https://i.ytimg.com/vi_webp/{}/maxresdefault.webp'.format(vid)
+        # return "https://i.ytimg.com/vi/{}/hqdefault.jpg".format(vid)
 
 
 def get_next_link(records):
