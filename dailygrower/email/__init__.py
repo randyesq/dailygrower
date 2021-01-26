@@ -17,7 +17,7 @@ def send_daily_link_email(config, links):
         config['buttondown_api_base_url']+'emails',
         json={
             "body": template.render(),
-            "included_tags": [ config['daily_digest_subscriber_tag'] ],
+            "included_tags": [ config['daily_digest_subscriber_tag'], config['all_digests_subscriber_tag'] ],
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "daily-{}".format(data['now'].strftime("%Y-%m-%d")),
@@ -40,7 +40,7 @@ def send_weekly_rollup_email(config, links):
         config['buttondown_api_base_url']+'emails',
         json={
             "body": template.render(),
-            "included_tags": [ config['weekly_digest_subscriber_tag'] ],
+            "included_tags": [ config['weekly_digest_subscriber_tag'], config['all_digests_subscriber_tag'] ],
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "weekly-{}".format(data['now'].strftime("%Y-%m-%d")),
@@ -49,4 +49,4 @@ def send_weekly_rollup_email(config, links):
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
     r.raise_for_status()
-    print("Daily email creation response %s" % r.json())
+    print("Weekly email creation response %s" % r.json())

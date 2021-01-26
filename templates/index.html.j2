@@ -7,14 +7,7 @@
 {% endif %}
 {% endblock autorefresh %}
 
-{% block page_js %}
-<script type="text/javascript">
-$( document ).ready(function() {});
-</script>
-{% endblock page_js %}
-
 {% block content %}
-
 {% for link in links %}
   {% set rowloop = loop %}
   {% if link.fields['Image URL'] %}

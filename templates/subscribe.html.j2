@@ -5,11 +5,22 @@
 {% block autorefresh %} {% endblock autorefresh %}
 
 {# Title for this page #}
-{% block title %}Subscribe{% endblock title %}
+{% block title %}Subscribe to {% endblock title %}
 
 {% block page_js %}
 <script type="text/javascript">
-$( document ).ready(function() {
+  $(document).ready(function() {
+    $('select[name="digest-select"]').change(function() {
+      digest = $(this).val();
+      if ( digest == 1 ) {
+        $('input[name="tag"]').val("weekly-digest");
+      } else if ( digest == 2) {
+        $('input[name="tag"]').val("daily-digest");
+      } else {
+        $('input[name="tag"]').val("all-digests");
+      }
+    });
+
     // If the form does not have the recaptcha clicked, don't allow submission
     $('#user-submit').click(function() {
         var googleResponse = $('#g-recaptcha-response').val();
@@ -20,7 +31,7 @@ $( document ).ready(function() {
             return true;
         }
     });
-});
+  });
 </script>
 {% endblock page_js %}
 
@@ -36,7 +47,7 @@ $( document ).ready(function() {
 {% block content %}
   <div class="row">
     <div class="col-md-12 p-2">
-      <h5>You are about to do Something Awesome</h5>
+      <h3>Subscribe to the Daily Grower</h3>
     </div>
   </div>
   <div class="row">
@@ -53,12 +64,53 @@ $( document ).ready(function() {
     </div>
   </div>
 
+
   <div class="row">
     <div class="col-md-12 p-2">
-      <iframe scrolling="no" style="width:100%!important;height:220px;border:1px #ccc solid !important" src="https://buttondown.email/dailygrower?as_embed=true">
-      </iframe>
-      <br />
-      <br />
+      <form
+        action="https://buttondown.email/api/emails/embed-subscribe/dailygrower"
+        method="post"
+        target="popupwindow"
+        onsubmit="window.open('https://buttondown.email/dailygrower', 'popupwindow')"
+        data-netlify-recaptcha="true"
+        class="embeddable-buttondown-form">
+
+        <div class="form-group">
+          <label for="bd-email" class="form-label">Email Address</label>
+          <input type="email" name="email" id="bd-email" placeholder="Your email (you@example.com)" class="form-control" aria-describedby="emailHelp" required/>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone.</small>
+        </div>
+
+        <div class="form-group">
+          Please send me a
+          <select name="digest-select" class="form-select" aria-label="Digest Selection" required>
+            <option value="1">Weekly</option>
+            <option value="2">Daily (5x/week)</option>
+            <option value="3">Daily and Weekly</option>
+          </select> email digest with stories that will guide and inform me.
+        </div>
+
+        <div class="form-group d-none" aria-hidden="true">
+            <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+        </div>
+
+        <div data-netlify-recaptcha="true"></div>
+
+        <div id="captcha-error" class="alert alert-danger d-none pt-2 pb-2" role="alert">
+            <h4 class="alert-heading user-form-text">Uh Oh! Are you a robot?</h4>
+            <hr>
+            <p class="user-form-text">Please click the captcha link above.</p>
+            <p class="user-form-text">(Unless you are a robot, and in that case, we don't hate robots, this form just isn't for you.</p>
+        </div>
+
+        <div class="form-group">
+          <input type="hidden" name="tag" value="weekly-digest" />
+          <input type="hidden" value="1" name="embed" />
+          <button type="submit" id="user-submit" class="btn btn-primary">Subscribe</button><a class="pl-3" href="{{ internal_pages.main }}">Cancel</a>
+        </div>
+     </form>
+
+
     </div>
   </div>
 {% endblock content %}
