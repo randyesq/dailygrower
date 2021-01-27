@@ -12,12 +12,12 @@ def send_daily_link_email(config, links):
     data['links'] = links
     template = ENV.get_template("daily_digest.md.j2", globals=data)
 
-    # Send the email via Buttondown API
+    # Send the email via Buttondown API to daily subscribers
     r = requests.post(
         config['buttondown_api_base_url']+'emails',
         json={
             "body": template.render(),
-            "included_tags": [ config['daily_digest_subscriber_tag'], config['all_digests_subscriber_tag'] ],
+            "included_tags": [ config['daily_digest_subscriber_tag']  ],
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "daily-{}".format(data['now'].strftime("%Y-%m-%d")),
@@ -26,7 +26,23 @@ def send_daily_link_email(config, links):
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
     r.raise_for_status()
-    print("Daily email creation response %s" % r.text)
+    print("Email creation response to daily subscribers: %s" % r.json())
+
+    # Send the email via Buttondown API to all digest subscribers
+    r = requests.post(
+        config['buttondown_api_base_url']+'emails',
+        json={
+            "body": template.render(),
+            "included_tags": [ config['all_digests_subscriber_tag']  ],
+            "email_type": "public",
+            "external_url": "https://dailygrower.com",
+            "slug": "daily-{}".format(data['now'].strftime("%Y-%m-%d")),
+            "subject": "Your stories for {} from The Daily Grower".format(data['now'].strftime("%A, %B %d"))
+        },
+        headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
+    )
+    r.raise_for_status()
+    print("Daily email creation response to all-digest subscribers: %s" % r.text)
 
 
 def send_weekly_rollup_email(config, links):
@@ -35,7 +51,7 @@ def send_weekly_rollup_email(config, links):
     data['links'] = links
     template = ENV.get_template("weekly_digest.md.j2", globals=data)
 
-    # Send the email via Buttondown API
+    # Send the email via Buttondown API to weekly subscribers
     r = requests.post(
         config['buttondown_api_base_url']+'emails',
         json={
@@ -49,4 +65,20 @@ def send_weekly_rollup_email(config, links):
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
     r.raise_for_status()
-    print("Weekly email creation response %s" % r.json())
+    print("Weekly email creation response: %s" % r.json())
+
+    # Send the email via Buttondown API to all digest subscribers
+    r = requests.post(
+        config['buttondown_api_base_url']+'emails',
+        json={
+            "body": template.render(),
+            "included_tags": [ config['all_digests_subscriber_tag'] ],
+            "email_type": "public",
+            "external_url": "https://dailygrower.com",
+            "slug": "weekly-{}".format(data['now'].strftime("%Y-%m-%d")),
+            "subject": "Your stories for this week from The Daily Grower"
+        },
+        headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
+    )
+    r.raise_for_status()
+    print("Weekly email creation response to all-digest subscribers: %s" % r.json())
