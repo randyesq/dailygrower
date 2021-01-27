@@ -111,7 +111,6 @@ def auto_fetch_images(fields):
     if 'youtu' in urlparse(fields['Link']).netloc:
         vid = dict(parse_qsl(urlparse(fields['Link']).query))['v']
         return 'https://i.ytimg.com/vi_webp/{}/maxresdefault.webp'.format(vid)
-        # return "https://i.ytimg.com/vi/{}/hqdefault.jpg".format(vid)
 
 
 def get_next_link(records):

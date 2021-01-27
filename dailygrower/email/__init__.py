@@ -37,7 +37,7 @@ def send_daily_link_email(config, links):
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "daily-{}".format(data['now'].strftime("%Y-%m-%d")),
-            "subject": "Your stories for {} from The Daily Grower".format(data['now'].strftime("%A, %B %d"))
+            "subject": "Your stories for {} from The Daily Grower!".format(data['now'].strftime("%A, %B %d"))
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
@@ -76,7 +76,7 @@ def send_weekly_rollup_email(config, links):
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "weekly-{}".format(data['now'].strftime("%Y-%m-%d")),
-            "subject": "Your stories for this week from The Daily Grower"
+            "subject": "Your stories for this week from The Daily Grower!"
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
