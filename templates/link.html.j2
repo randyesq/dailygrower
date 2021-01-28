@@ -1,18 +1,18 @@
-{% if 'Shopping' in link.fields['Link Tags'] %}
+{% if 'Shopping' in link.tags %}
 <i class="fas fa-shopping-cart"></i>
-{% elif 'youtu' in link.fields.Link %}
+{% elif link.is_youtube_link() %}
 <i class="fab fa-youtube"></i>
-{% elif 'Cookery' in link.fields['Link Tags'] %}
+{% elif 'Cookery' in link.tags %}
 <i class="fas fa-utensils"></i>
-{% elif 'Articles' in link.fields['Link Tags'] or 'Blogs' in link.fields['Link Tags'] %}
+{% elif 'Articles' in link.tags or 'Blogs' in link.tags %}
 <i class="far fa-newspaper"></i>
 {% endif %}
-<a class="content-link" href="{{ link.fields.Link }}"
-    {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.fields.Link }}'); return false;"{% endif %}>
-    {% if link_page_type == "index" %}{{ link | approval_day(timezone) }} - {% endif %}{{ link.fields.Headline|title }}
+<a class="content-link" href="{{ link.url }}"
+    {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.url }}'); return false;"{% endif %}>
+    {% if link_page_type == "index" %}{{ link | approval_day(timezone) }} - {% endif %}{{ link.headline|title }}
 </a>
-{% if ENABLE_LINK_NETLOC %}<span class="content-link-netloc">({{ link.fields.Link | netloc }})</span>{% endif %}
+{% if ENABLE_LINK_NETLOC %}<span class="content-link-netloc">({{ link.netloc }})</span>{% endif %}
 {% if link_page_type == "archive" %}
-<p class="content-link-netloc">First appeared {{ link.fields['Approval Date'].strftime('%B, %d, %Y') }}</p>
+<p class="content-link-netloc">First appeared {{ link.approval_date.strftime('%B, %d, %Y') }}</p>
 {% endif %}
-<p class="content-link-blurb">{{ link.fields.Blurb }}</p>
+<p class="content-link-blurb">{{ link.blurb }}</p>

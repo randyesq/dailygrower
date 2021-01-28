@@ -6,6 +6,8 @@ from urllib.parse import urljoin, urlparse, parse_qsl
 
 import requests
 
+from dailygrower.links import LinkSchema
+
 
 AIRTABLE_API_BASE_URL = "https://api.airtable.com"
 AIRTABLE_API_VERSION = "v0"
@@ -28,6 +30,7 @@ class LinksAirtableView(object):
         self.table = table
         self.view = view
         self.auth = BearerAuth(api_key)
+        self.link_schema = LinkSchema()
 
     def __repr__(self):
         return 'Links-type Base: table={}, view={}, id={}'.format(self.table, self.view, self.base_id)
@@ -47,7 +50,7 @@ class LinksAirtableView(object):
         )
         r.raise_for_status()
         records = r.json()['records']
-        return self.sanitize_records(list(records))
+        return self.link_schema.load(list(records), many=True)
 
     def approve_records(self, records):
         """ Approve records in the table """
@@ -58,12 +61,12 @@ class LinksAirtableView(object):
                 url,
                 auth=self.auth,
                 json={
-                    "records": [{"id": record["id"], "fields": { "Approved": True }}]
+                    "records": [{"id": record.id, "fields": { "Approved": True }}]
                 }
             )
             r.raise_for_status()
             patched_records.append(r.json()['records'][0])
-        return self.sanitize_records(patched_records)
+        return self.link_schema.load(list(patched_records), many=True)
 
     def archive_records(self, records):
         """ Archive records in the table """
@@ -74,43 +77,12 @@ class LinksAirtableView(object):
                 url,
                 auth=self.auth,
                 json={
-                    "records": [{"id": record["id"], "fields": { "Archived": True }}]
+                    "records": [{"id": record.id, "fields": { "Archived": True }}]
                 }
             )
             r.raise_for_status()
             patched_records.append(r.json()['records'][0])
-        return self.sanitize_records(patched_records)
-
-    def sanitize_records(self, records):
-        """ Pythonize fields that don't convert from the JSON """
-        for rec in records:
-            for field in rec['fields']:
-                if isinstance(rec['fields'][field], str):
-                    rec['fields'][field] = rec['fields'][field].strip()
-            if 'Approval Date' in rec['fields']:
-                rec['fields']['Approval Date'] = datetime.datetime.strptime(
-                    rec['fields']['Approval Date'],
-                    '%Y-%m-%dT%H:%M:%S.000Z'
-                )
-            if 'createdTime' in rec:
-                rec['createdTime'] = datetime.datetime.strptime(
-                    rec['createdTime'],
-                    '%Y-%m-%dT%H:%M:%S.000Z'
-                )
-            if 'Image URL' not in rec['fields']:
-                rec['fields']['Image URL'] = auto_fetch_images(rec['fields'])
-        return records
-
-
-def auto_fetch_images(fields):
-    """
-    Fetch an image from an automatic source, if possible. Right now only works
-    with YouTube videos.
-    # https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
-    """
-    if 'youtu' in urlparse(fields['Link']).netloc:
-        vid = dict(parse_qsl(urlparse(fields['Link']).query))['v']
-        return 'https://i.ytimg.com/vi_webp/{}/maxresdefault.webp'.format(vid)
+        return self.link_schema.load(list(patched_records), many=True)
 
 
 def get_next_link(records):
@@ -125,19 +97,16 @@ def get_next_link(records):
 
     next_link = records[0]
     featured = sorted(
-        [record for record in records
-            if 'Featured' in record['fields'] and record['fields']['Featured']
-        ],
-        key=lambda x: (x['createdTime'])
+        [r for r in records if r.featured], key=lambda x: (x.created_date)
     )
 
-    # return the newest one
+    # Return the newest one
     if featured:
         return [featured[-1]]
 
     # Return the oldest of the links since none are featured
     pending = sorted(
         [record for record in records],
-        key=lambda x: (x['createdTime'])
+        key=lambda x: (x.created_date)
     )
     return [pending[0]]

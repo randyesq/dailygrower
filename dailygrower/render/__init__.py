@@ -11,7 +11,7 @@ import os
 from jinja2 import Environment, FileSystemLoader
 import pytz
 
-from dailygrower.render.filters import netloc, approval_day, make_ordinal
+from dailygrower.render.filters import approval_day, make_ordinal
 
 # Template rendering output directory
 OUTPUT_DIR = Path(os.environ.get(
@@ -26,7 +26,6 @@ ENV = Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True
 )
-ENV.filters['netloc'] = netloc
 ENV.filters['approval_day'] = approval_day
 ENV.filters['make_ordinal'] = make_ordinal
 
@@ -74,14 +73,14 @@ def render_link_content(config, link_content):
     # Current links
     data = construct_global_data(config)
     data['links'] = link_content['current'].get_view_records()
-    data['links'].sort(key=lambda x: x['fields']['Approval Date'], reverse=True)
+    data['links'].sort(key=lambda x: x.approval_date, reverse=True)
 
     for template in LINK_CONTENT_TEMPLATES:
         render_and_write(template, ENV.get_template(template, globals=data))
 
     # Archived links
     data['links'] = link_content['archived'].get_view_records()
-    data['links'].sort(key=lambda x: x['fields']['Approval Date'], reverse=True)
+    data['links'].sort(key=lambda x: x.approval_date, reverse=True)
     data['link_archive_page'] = True
     data['num_link_pages'] = math.ceil(len(data['links']) / 5)  # Five archive links per page
     for template in LINK_ARCHIVE_CONTENT_TEMPLATES:

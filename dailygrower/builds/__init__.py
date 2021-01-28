@@ -11,7 +11,7 @@ def build_render(config):
     Render a site without making any automatic changes to links, just
     re-render the templates
     """
-    link_content = _get_link_views(config, archived=True)
+    link_content = _get_link_views(config, current=True, archived=True)
 
     # Render Site
     render_full_site(config, link_content=link_content)
@@ -21,7 +21,7 @@ def build_weekday(config):
     """
     Weekday build, pull a pending story off the shelf and send daily email
     """
-    link_content = _get_link_views(config, True, True, True)
+    link_content = _get_link_views(config, pending=True)
 
     # Get the next link to be featured this week
     next_link = get_next_link(link_content['pending'].get_view_records())
@@ -36,7 +36,7 @@ def build_weekday(config):
 
 def build_rollup(config):
     """ Rollup build, send weekly digest email, typically a Saturday """
-    link_content = _get_link_views(config)
+    link_content = _get_link_views(config, current=True)
 
     # Create weekly digest subscriber email
     send_weekly_rollup_email(config, link_content['current'].get_view_records())
@@ -44,14 +44,14 @@ def build_rollup(config):
 
 def build_sabbath(config):
     """ Sabbath build, archive the previous week's posts, typically a Sunday """
-    link_content = _get_link_views(config)
+    link_content = _get_link_views(config, current=True)
 
     # Archive this week's posts
     posts = link_content['current'].get_view_records()
     link_content['current'].archive_records(posts)
 
 
-def _get_link_views(config, pending=False, current=True, archived=False):
+def _get_link_views(config, pending=False, current=False, archived=False):
     """ Get the content table views as prescribed """
     link_content = {}
     if pending:
