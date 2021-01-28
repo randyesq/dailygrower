@@ -10,11 +10,11 @@
 {% block content %}
 {% for link in links %}
   {% set rowloop = loop %}
-  {% if link.fields['Image URL'] %}
+  {% if link.image_url %}
   <div class="row mt-2">
     <div class="col-md-12">
-      <a href="{{ link.fields.Link }}" {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.fields.Link }}'); return false;"{% endif %}>
-        <img src="{{ link.fields['Image URL'] }}" class="rounded mx-auto d-block img-fluid" alt="{{ link.fields.Headline|title }}">
+      <a href="{{ link.url }}" {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.url }}'); return false;"{% endif %}>
+        <img src="{{ link.image_url }}" class="rounded mx-auto d-block img-fluid" alt="{{ link.headline|title }}">
       </a>
     </div>
   </div>

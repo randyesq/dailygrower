@@ -13,7 +13,7 @@ Enjoy today's link{% if links|length > 1 %}s{% endif %} showcasing the best of t
 And now for *today's* stor{% if links|length > 1 %}ies{% else %}y{% endif %}:
 
 {% for link in links %}
-- [{{ link.fields.Headline | title }}]({{ link.fields.Link }}) [{{ link.fields.Link | netloc }}] -- {{ link.fields.Blurb}}
+- [{{ link.headline | title }}]({{ link.url }}) [{{ link.netloc }}] -- {{ link.blurb}}
 {% endfor %}
 {% endblock message_body %}
 
