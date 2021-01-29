@@ -8,6 +8,11 @@
 {% endblock autorefresh %}
 
 {% block content %}
+  <div class="row mt-2">
+    <div class="col-md-12">
+    <h5 class="text-center">Subscribers get way more than our daily featured stories. Join our tribe. It's easy and free! <a href="{{ internal_pages.subscribe }}">Become a Daily Grower today.</a></h5>
+    </div>
+  </div>
 {% for link in links %}
   {% set rowloop = loop %}
   {% if link.image_url %}
@@ -64,5 +69,9 @@
 <hr>
 <div class="row">
   <div class="col-md-12">{% include 'sidebar-contribute.html.j2' %}</div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-support.html.j2' %}</div>
 </div>
 {% endblock sidebar %}

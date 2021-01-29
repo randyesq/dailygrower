@@ -4,12 +4,18 @@
     {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
     <meta name="description" content="The best daily content for homesteaders, farmers, and growers all over the world.">
     <meta name="author" content="The Folks @ The Daily Grower">
     {% block autorefresh %}{% endblock autorefresh %}
     <meta name="generator" content="Python 3.7; Jinja2 2.11">
     <title>{% block title %}{% endblock title %} The Daily Grower</title>
-    <link rel="canonical" href="https://dailygrower.com">
+    <link rel="canonical" href="https://dailygrower.com/">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Daily Grower - Grow Your Homestead and Farm" />
+    <meta property="og:url" content="https://dailygrower.com/" />
+    <meta property="og:site_name" content="The Daily Grower" />
 
     <!-- Google AdSense -->
     {% if ENABLE_GOOGLE_ADS %}<script data-ad-client="ca-pub-3256029525911021" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}
@@ -54,6 +60,9 @@
     <link href="static/css/blog.css" rel="stylesheet">
     <link href="static/css/dg.css" rel="stylesheet">
 
+    <!-- Patreon Button -->
+    <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+
     <!-- Custom JavaScript for this template -->
     {% block page_js %}{% endblock page_js %}
 
@@ -81,7 +90,7 @@
         <!-- Tagline -->
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-12 pt-3 text-center">
-            <p class="blog-header-tagline text-muted font-italic">Crowdsourced stories to help you grow better every day</p>
+            <p class="blog-header-tagline text-muted font-italic">Build your knowledge, start your homestead, grow every day</p>
           </div>
         </div>
       </header>
