@@ -1,11 +1,6 @@
 {# User submission page  - contribute.html #}
 {% extends "base.html.j2" %}
 
-{# Autoredirect to the home page after saying thanks #}
-{% block autorefresh %}
-<meta http-equiv="refresh" content="15; url=https://dailygrower.com"/>
-{% endblock autorefresh %}
-
 {# Title for this page #}
 {% block title %}Thank you for subscribing to The Daily Grower{% endblock title %}
 
@@ -29,12 +24,9 @@
     <ol>
       <li>Make sure you look out for your first email soon. If you don't see it, search for dailygrower@mg.buttondown.email and mark it as <b>not spam</b>.</li>
       <li><a href="{{ internal_pages.contribute }}">Contribute</a> a story or video or product that has changed your life to share with everyone.</li>
-      <li>Head back to the <a href="/">home</a> page for more Daily Grower goodness.</li>
+      <li>Head over to our <a href="{{ internal_pages.subscribers }}">Subscribers-only</a> content and check out the discounts and products we have for you.</li>
+      <li>Head back to the <a href="{{ internal_pages.main }}">home</a> page for more Daily Grower goodness.</li>
     </ol>
-    </p>
-    <p>
-      You can click the links above <b>OR</b> you can just sit tight and we'll
-      take you to the home page auto-magically in a few seconds.
     </p>
   </div>
 </div>

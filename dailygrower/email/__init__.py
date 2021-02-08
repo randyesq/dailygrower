@@ -25,6 +25,7 @@ def send_daily_link_email(config, links):
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
+    print(r.text)
     r.raise_for_status()
     print("Email creation response to daily subscribers: %s" % r.json())
 
@@ -41,6 +42,7 @@ def send_daily_link_email(config, links):
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
+    print(r.text)
     r.raise_for_status()
     print("Daily email creation response to all-digest subscribers: %s" % r.text)
 
@@ -64,6 +66,7 @@ def send_weekly_rollup_email(config, links):
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
+    print(r.text)
     r.raise_for_status()
     print("Weekly email creation response: %s" % r.json())
 
@@ -80,5 +83,6 @@ def send_weekly_rollup_email(config, links):
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
+    print(r.text)
     r.raise_for_status()
     print("Weekly email creation response to all-digest subscribers: %s" % r.json())
