@@ -1,0 +1,66 @@
+{# Subscriber Page  - subscribers.html #}
+{% extends "base.html.j2" %}
+
+{% block content %}
+<div class="row mt-2">
+  <div class="col-md-12">
+  <h4 class="text-center">Thank you for being a Subscriber!</h4>
+  <p class="text-center">Check out the products and services recommended by The Daily Grower!</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+      <h5>Products</h5>
+        <div class="row">
+          <div class="col-md-3"><a href="https://farmerbrad.com/products/4-gallon-automatic-chicken-waterer?utm_source=dailygrower&utm_campaign=youtube"><img class="rounded mx-auto d-block img-fluid" src="https://cdn.shopify.com/s/files/1/2094/7845/products/IMG_5712-removebg-preview_1024x1024.png?v=1588083800"></a></div>
+          <div class="col-md-9"><a href="https://farmerbrad.com/products/4-gallon-automatic-chicken-waterer?utm_source=dailygrower&utm_campaign=youtube">4 Gallon Automatic Chicken Waterer</a> from Farmer Brad.
+            We use this waterer in the Winter without the automatic setup in
+            our coops along with a bird bath deicer. Handles -25F mornings
+            with no problems! See Randy Kleinman's <a href="https://youtu.be/yCEQiutmiD8">YouTube Review</a>.
+            Use code <b>DAILYGROWER5</b> for 5% off at checkout!</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3"><a href="https://amzn.to/3tBDQar"><img class="rounded mx-auto d-block img-fluid" src="https://images-na.ssl-images-amazon.com/images/I/61HBq21RzXL._AC_SL1465_.jpg"></a></div>
+          <div class="col-md-9"><a href="https://amzn.to/3tBDQar">Farm Innovators Bird Bath De-Icer (150 watt)</a> - Keeps
+            chicken waterers from freezing even in nasty Minnesota winter weather. Durable and well-built,
+            this de-icer has been in service for 5+ years with no signs of stopping anytime soon.
+            See Randy Kleinman's <a href="https://youtu.be/yCEQiutmiD8">YouTube Review</a>.</div>
+        </div>
+  </div>
+</div>
+<div class="row pt-2">
+    <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+        Like the <i>The Daily Grower</i>? Tell a friend! We'd love for them to join the Daily Grower community.
+        </div>
+    </div>
+</div>
+
+
+{# Google Ad space #}
+{% if ENABLE_GOOGLE_ADS %}
+<div class="row">
+  <div class="col-md-12">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- Daily Grower Horizontal Ad -->
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3256029525911021" data-ad-slot="1123722288" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+{% endif %}
+  <hr>
+{% endblock content %}
+
+{% block sidebar %}
+{{ super() }}
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-contribute.html.j2' %}</div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-12">{% include 'sidebar-support.html.j2' %}</div>
+</div>
+{% endblock sidebar %}

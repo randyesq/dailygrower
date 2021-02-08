@@ -35,7 +35,8 @@ STATIC_TEMPLATES = [
     "contribute.html.j2",
     "contrib-thanks.html.j2",
     "subscribe.html.j2",
-    "subscribe-thanks.html.j2"
+    "subscribe-thanks.html.j2",
+    "subscribers.html.j2"
 ]
 
 # Templates containing link content
@@ -99,6 +100,7 @@ def construct_global_data(config):
             'contribute': 'contribute.html',
             'main': 'index.html',
             'subscribe': 'subscribe.html',
+            'subscribers': 'subscribers.html',
         },
         'ENABLE_GOOGLE_ADS': config.getboolean('ENABLE_GOOGLE_ADS'),
         'ENABLE_GOOGLE_LINK_TRACKING': config.getboolean('ENABLE_GOOGLE_LINK_TRACKING'),
