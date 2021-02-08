@@ -10,7 +10,7 @@ Congrats on making it through the {{ now.strftime("%U") | make_ordinal }} week o
 {% endblock greeting %}
 
 {% block message_body %}
-And now for stor{% if links|length > 1 %}ies{% else %}y{% endif %} featured this past week:
+And now for the stor{% if links|length > 1 %}ies{% else %}y{% endif %} featured this past week:
 
 {% for link in links %}
 - [{{ link.headline | title }}]({{ link.url }}) [{{ link.netloc }}] -- {{ link.blurb}}
