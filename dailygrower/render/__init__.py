@@ -3,6 +3,7 @@
 Render the site templates given the gathered information from
 other sources (dbs, config, etc).
 """
+from collections import defaultdict
 import datetime
 import math
 from pathlib import Path
@@ -23,7 +24,7 @@ ENV = Environment(
     loader=FileSystemLoader(
         Path(__file__).parent.parent.parent.joinpath('templates')
     ),
-    extensions=['jinja2.ext.autoescape'],
+    extensions=['jinja2.ext.autoescape', 'jinja2_slug.SlugExtension'],
     autoescape=True
 )
 ENV.filters['approval_day'] = approval_day
@@ -36,23 +37,26 @@ STATIC_TEMPLATES = [
     "contrib-thanks.html.j2",
     "subscribe.html.j2",
     "subscribe-thanks.html.j2",
-    "subscribers.html.j2"
 ]
 
 # Templates containing link content
 LINK_CONTENT_TEMPLATES = [ "index.html.j2", ]
 LINK_ARCHIVE_CONTENT_TEMPLATES = [ "archive.html.j2", ]
+DEALS_TEMPLATES = [ "subscribers.html.j2", ]
 
 # All templates
 ALL_TEMPLATES = STATIC_TEMPLATES + \
     LINK_CONTENT_TEMPLATES + LINK_ARCHIVE_CONTENT_TEMPLATES
 
 
-def render_full_site(config, link_content=None):
+def render_full_site(config, link_content=None, deals_content=None):
     """ Render all of the content templates and static templates """
     render_static(config)
     if link_content:
         render_link_content(config, link_content)
+
+    if deals_content:
+        render_deals_content(config, deals_content)
 
 
 def render_static(config):
@@ -85,6 +89,18 @@ def render_link_content(config, link_content):
     data['link_archive_page'] = True
     data['num_link_pages'] = math.ceil(len(data['links']) / 5)  # Five archive links per page
     for template in LINK_ARCHIVE_CONTENT_TEMPLATES:
+        render_and_write(template, ENV.get_template(template, globals=data))
+
+
+def render_deals_content(config, deals_content):
+    """ Render templaes that depend on subscriber deals content """
+    data = construct_global_data(config)
+    deals_data = defaultdict(list)
+    for entry in deals_content.get_view_records():
+        deals_data[entry.type].append(entry)
+
+    data['deals'] = deals_data
+    for template in DEALS_TEMPLATES:
         render_and_write(template, ENV.get_template(template, globals=data))
 
 

@@ -5,37 +5,47 @@
 <div class="row mt-2">
   <div class="col-md-12">
   <h4 class="text-center">Thank you for being a Subscriber!</h4>
-  <p class="text-center">Check out the products and services recommended by The Daily Grower!</p>
+  <p class="text-center">Exclusive deals, and products and services recommended by The Daily Grower!</p>
   </div>
 </div>
+
+<div class="row-fluid text-center">
+    <div class="span12">|
+      {% for deal_type in deals.keys() %}
+      <a href="#{{ deal_type | slug }}" class="d-inline pr-2 pl-2">{{ deal_type }}</a>|
+      {% endfor %}
+    </div>
+</div>
+<hr>
+{% for deal_type, deal_entries in deals.items() %}
 <div class="row">
-  <div class="col-md-12">
-      <h5>Products</h5>
-        <div class="row">
-          <div class="col-md-3"><a href="https://farmerbrad.com/products/4-gallon-automatic-chicken-waterer?utm_source=dailygrower&utm_campaign=youtube"><img class="rounded mx-auto d-block img-fluid" src="https://cdn.shopify.com/s/files/1/2094/7845/products/IMG_5712-removebg-preview_1024x1024.png?v=1588083800"></a></div>
-          <div class="col-md-9"><a href="https://farmerbrad.com/products/4-gallon-automatic-chicken-waterer?utm_source=dailygrower&utm_campaign=youtube">4 Gallon Automatic Chicken Waterer</a> from Farmer Brad.
-            We use this waterer in the Winter without the automatic setup in
-            our coops along with a bird bath deicer. Handles -25F mornings
-            with no problems! See Randy Kleinman's <a href="https://youtu.be/yCEQiutmiD8">YouTube Review</a>.
-            Use code <b>DAILYGROWER</b> for 5% off at checkout!</div>
-        </div>
-        <div class="row">
-          <div class="col-md-3"><a href="https://amzn.to/3tBDQar"><img class="rounded mx-auto d-block img-fluid" src="https://images-na.ssl-images-amazon.com/images/I/61HBq21RzXL._AC_SL1465_.jpg"></a></div>
-          <div class="col-md-9"><a href="https://amzn.to/3tBDQar">Farm Innovators Bird Bath De-Icer (150 watt)</a> - Keeps
-            chicken waterers from freezing even in nasty Minnesota winter weather. Durable and well-built,
-            this de-icer has been in service for 5+ years with no signs of stopping anytime soon.
-            See Randy Kleinman's <a href="https://youtu.be/yCEQiutmiD8">YouTube Review</a>.</div>
-        </div>
+  <div class="col-md-12 mb-5">
+    <h5>{{ deal_type }}</h5><a name="{{ deal_type | slug }}"></a>
+    {% for deal in deal_entries %}
+    <div class="row">
+      <div class="col-md-3 pb-3">
+        <a href="{{ deal.url }}"><img class="rounded mx-auto d-block img-fluid" src="{{ deal.image_url }}"></a>
+      </div>
+      <div class="col-md-9">
+        <a href="{{ deal.url }}">{{ deal.title | title }}</a><br>
+        <p>{{ deal.blurb | safe }}</p>
+        {% if deal.tags %}<p>Tags: {% for tag in deal.tags %}{{ tag }}{% if not loop.last%},{% endif %} {% endfor %}</p>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
   </div>
+  <hr>
 </div>
+{% endfor %}
+
+
 <div class="row pt-2">
     <div class="col-md-12">
         <div class="alert alert-info" role="alert">
-        Like the <i>The Daily Grower</i>? Tell a friend! We'd love for them to join the Daily Grower community.
+          Like the <i>The Daily Grower</i>? Tell a friend! We'd love for them to join the Daily Grower community.
         </div>
     </div>
 </div>
-
 
 {# Google Ad space #}
 {% if ENABLE_GOOGLE_ADS %}

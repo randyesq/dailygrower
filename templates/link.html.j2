@@ -15,4 +15,4 @@
 {% if link_page_type == "archive" %}
 <p class="content-link-netloc">First appeared {{ link.approval_date.strftime('%B, %d, %Y') }}</p>
 {% endif %}
-<p class="content-link-blurb">{{ link.blurb }}</p>
+<p class="content-link-blurb">{{ link.blurb | safe }}</p>

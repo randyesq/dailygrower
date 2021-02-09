@@ -7,6 +7,7 @@ from urllib.parse import urljoin, urlparse, parse_qsl
 import requests
 
 from dailygrower.links import LinkSchema
+from dailygrower.links.deals import DealsLinkSchema
 
 
 AIRTABLE_API_BASE_URL = "https://api.airtable.com"
@@ -22,18 +23,18 @@ class BearerAuth(requests.auth.AuthBase):
         return r
 
 
-class LinksAirtableView(object):
+class AirtableView(object):
     """ A class for interacting with AirTable Views """
+    schema = None
 
     def __init__(self, base_id, table, view, api_key=AIRTABLE_API_KEY):
         self.base_id = base_id
         self.table = table
         self.view = view
         self.auth = BearerAuth(api_key)
-        self.link_schema = LinkSchema()
 
     def __repr__(self):
-        return 'Links-type Base: table={}, view={}, id={}'.format(self.table, self.view, self.base_id)
+        return 'Base: table={}, view={}, id={}'.format(self.table, self.view, self.base_id)
 
     def _get_table_url(self):
         """ Get the url for a table in a base """
@@ -50,7 +51,16 @@ class LinksAirtableView(object):
         )
         r.raise_for_status()
         records = r.json()['records']
-        return self.link_schema.load(list(records), many=True)
+        return self.schema.load(list(records), many=True)
+
+
+class DealsLinkAirtableView(AirtableView):
+    schema = DealsLinkSchema()
+
+
+class LinksAirtableView(AirtableView):
+    """ A class for interacting with AirTable Views for Links """
+    schema = LinkSchema()
 
     def approve_records(self, records):
         """ Approve records in the table """
@@ -66,7 +76,7 @@ class LinksAirtableView(object):
             )
             r.raise_for_status()
             patched_records.append(r.json()['records'][0])
-        return self.link_schema.load(list(patched_records), many=True)
+        return self.schema.load(list(patched_records), many=True)
 
     def archive_records(self, records):
         """ Archive records in the table """
@@ -82,7 +92,7 @@ class LinksAirtableView(object):
             )
             r.raise_for_status()
             patched_records.append(r.json()['records'][0])
-        return self.link_schema.load(list(patched_records), many=True)
+        return self.schema.load(list(patched_records), many=True)
 
 
 def get_next_link(records):

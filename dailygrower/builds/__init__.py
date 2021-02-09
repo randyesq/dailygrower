@@ -1,7 +1,7 @@
 # Daily Grower Build Types
 import os
 
-from dailygrower.airtable import LinksAirtableView, get_next_link
+from dailygrower.airtable import LinksAirtableView, DealsLinkAirtableView, get_next_link
 from dailygrower.render import render_full_site
 from dailygrower.email import send_daily_link_email, send_weekly_rollup_email
 
@@ -12,9 +12,16 @@ def build_render(config):
     re-render the templates
     """
     link_content = _get_link_views(config, current=True, archived=True)
+    deals_content = DealsLinkAirtableView(
+        config['at_deals_base_id'],
+        config['at_deals_table'],
+        config['at_deals_view']
+    )
 
     # Render Site
-    render_full_site(config, link_content=link_content)
+    render_full_site(
+        config, link_content=link_content, deals_content=deals_content
+    )
 
 
 def build_weekday(config):
