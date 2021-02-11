@@ -82,6 +82,7 @@ class LinkSchema(Schema):
     image_url = fields.Url(missing=None)
     image_alt = fields.Str(missing=None)
     created_date = fields.DateTime(required=True)
+    subscriber_notes = fields.Str(required=False, missing=None)
 
     class Meta:
         datetimeformat = '%Y-%m-%dT%H:%M:%S.000Z'
@@ -104,6 +105,7 @@ class LinkSchema(Schema):
         data['archive_date'] =raw_data['fields'].get('Archive Date', None)
         data['image_url'] = raw_data['fields'].get('Image URL', None)
         data['image_alt'] = raw_data['fields'].get('Image Alt', None)
+        data['subscriber_notes'] = raw_data['fields'].get('Subscriber Notes', None)
         return data
 
     @post_load

@@ -13,7 +13,9 @@ Congrats on making it through the {{ now.strftime("%U") | make_ordinal }} week o
 And now for the stor{% if links|length > 1 %}ies{% else %}y{% endif %} featured this past week:
 
 {% for link in links %}
-- [{{ link.headline | title }}]({{ link.url }}) [{{ link.netloc }}] -- {{ link.blurb}}
+#### [{{ link.headline | title }}]({{ link.url }})
+
+{{ link.blurb}}
 {% endfor %}
 {% endblock message_body %}
 
