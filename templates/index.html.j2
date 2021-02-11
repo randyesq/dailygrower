@@ -19,7 +19,7 @@
   <div class="row mt-2">
     <div class="col-md-12">
       <a href="{{ link.url }}" {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.url }}'); return false;"{% endif %}>
-        <img src="{{ link.image_url }}" class="rounded img-fluid" alt="{{ link.headline|title }}">
+        <img src="{{ link.image_url }}" class="rounded mx-auto d-block img-fluid" alt="{{ link.headline|title }}">
       </a>
     </div>
   </div>
