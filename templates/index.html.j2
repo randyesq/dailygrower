@@ -8,39 +8,43 @@
 {% endblock autorefresh %}
 
 {% block content %}
-  <div class="row mt-2">
+  <div class="row p-2">
     <div class="col-md-12">
-    <h5 class="text-center">Subscribers get way more than our daily featured stories. Join our tribe. It's easy and free! <a href="{{ internal_pages.subscribe }}">Become a Daily Grower today.</a></h5>
+    <h5 class="text-center">Subscribers get more than our daily featured stories. Join our tribe. It's easy and free!</h5>
+    <h5 class="text-center"><a href="{{ internal_pages.subscribe }}">Become a Daily Grower today.</a></h5>
     </div>
   </div>
+  <hr>
+
 {% for link in links %}
   {% set rowloop = loop %}
-  {% if link.image_url %}
-  <div class="row mt-2">
-    <div class="col-md-12">
-      <a href="{{ link.url }}" {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.url }}'); return false;"{% endif %}>
-        <img src="{{ link.image_url }}" class="rounded mx-auto d-block img-fluid" alt="{{ link.headline|title }}">
-      </a>
+  <div class="row mt-2 d-flex flex-wrap align-items-center">
+    <div class="col-md-2 text-center"><h5>{{ link | approval_day(timezone) }}</h5></div>
+    <div class="col-md-3">
+      {% if link.image_url %}
+        <a href="{{ link.url }}" {% if ENABLE_GOOGLE_LINK_TRACKING %}onclick="getOutboundLink('{{ link.url }}'); return false;"{% endif %}>
+          <img src="{{ link.image_url }}" class="rounded mx-auto d-block img-fluid" alt="{{ link.headline|title }}">
+        </a>
+      {% endif %}
     </div>
-  </div>
-  {% endif %}
-  <div class="row">
-    <div class="col-md-12">
+
+    <div class="col-md-7">
       {% with link_page_type = "index" %}
         {% include 'link.html.j2' %}
       {% endwith %}
     </div>
   </div>
-  {% if not loop.last %}
   <hr>
-  {% endif %}
 {% endfor %}
+
 <div class="row pt-2">
-    <div class="col-md-12">
-        <div class="alert alert-info" role="alert">
-        Looking for more stories from <i>The Daily Grower</i>? Check out our <a href="{{ internal_pages.archive }}">archives</a>.
-        </div>
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="alert alert-info text-center" role="alert">
+      Looking for more stories from <i>The Daily Grower</i>? Check out our <a href="{{ internal_pages.archive }}">archives</a>.
     </div>
+  </div>
+  <div class="col-md-2"></div>
 </div>
 
 
