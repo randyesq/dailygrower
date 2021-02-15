@@ -20,6 +20,10 @@ Enjoy today's link{% if links|length > 1 %}s{% endif %} showcasing the best of t
 > Randy's note: {{ link.subscriber_notes }}
 {% endif %}
 
+{% if link.image_url %}
+[![{{ link.headline | title }}]({{ link.image_url }} "{{ link.headline | title }}")]({{ link.url }})
+{% endif %}
+
 {{ link.blurb | safe }}
 
 {% endfor %}
