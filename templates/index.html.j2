@@ -38,13 +38,17 @@
 {% endfor %}
 
 <div class="row pt-2">
-  <div class="col-md-2"></div>
-  <div class="col-md-8">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
     <div class="alert alert-info text-center" role="alert">
+    {% if links | length < 3 %}
+      It's still pretty early in the week. Check out our <a href="{{ internal_pages.archive }}">archives</a> for previously featured stories.
+    {% else %}
       Looking for more stories from <i>The Daily Grower</i>? Check out our <a href="{{ internal_pages.archive }}">archives</a>.
+    {% endif %}
     </div>
   </div>
-  <div class="col-md-2"></div>
+  <div class="col-md-1"></div>
 </div>
 
 
