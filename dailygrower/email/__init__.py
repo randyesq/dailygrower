@@ -13,15 +13,16 @@ def send_daily_link_email(config, links):
     template = ENV.get_template("daily_digest.md.j2", globals=data)
 
     # Send the email via Buttondown API to daily subscribers
+    subject = "{} -- today on The Daily Grower".format(links[0].headline)
     r = requests.post(
         config['buttondown_api_base_url']+'emails',
         json={
             "body": template.render(),
-            "included_tags": [ config['daily_digest_subscriber_tag']  ],
+            "included_tags": [ config['daily_digest_subscriber_tag'] ],
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "daily-{}".format(data['now'].strftime("%Y-%m-%d")),
-            "subject": "Your stories for {} from The Daily Grower".format(data['now'].strftime("%A, %B %d"))
+            "subject": subject,
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
@@ -38,7 +39,7 @@ def send_daily_link_email(config, links):
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "daily-{}".format(data['now'].strftime("%Y-%m-%d")),
-            "subject": "Your stories for {} from The Daily Grower!".format(data['now'].strftime("%A, %B %d"))
+            "subject": subject+"!"
         },
         headers={"Authorization": "Token %s" % BUTTONDOWN_API_KEY}
     )
