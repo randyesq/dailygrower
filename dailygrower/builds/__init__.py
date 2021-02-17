@@ -92,10 +92,10 @@ def create_facebook_post(config, next_link):
     message = """
     Today on The Daily Grower:
 
-    {}
+    {} --- {}
 
-    Check it out at https://dailygrower.com
-    """.format(link.headline)
+    Read more at https://dailygrower.com
+    """.format(link.headline, link.blurb)
     print(graph.put_object(
         fb_page,
         "feed",
