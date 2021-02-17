@@ -4,3 +4,4 @@ MarkupSafe==1.1.1
 pytz==2020.4
 requests==2.24.0
 marshmallow==3.10.0
+facebook-sdk==3.1.0
