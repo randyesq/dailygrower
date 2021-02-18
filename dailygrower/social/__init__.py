@@ -23,6 +23,6 @@ def create_facebook_post(config, next_link):
         fb_page,
         "feed",
         published=False,
-        message="Hello, world",
+        message=message,
         scheduled_publish_time=then.replace(microsecond=0).isoformat()
     ))
