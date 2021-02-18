@@ -4,6 +4,7 @@ import os
 from dailygrower.airtable import LinksAirtableView, DealsLinkAirtableView, get_next_link
 from dailygrower.render import render_full_site
 from dailygrower.email import send_daily_link_email, send_weekly_rollup_email
+from dailygrower.social import create_facebook_post
 
 
 def build_render(config):
@@ -80,26 +81,3 @@ def _get_link_views(config, pending=False, current=False, archived=False):
         )
 
     return link_content
-
-def create_facebook_post(config, next_link):
-    import facebook
-    import datetime
-    fb_page = config['facebook_page_id']
-    access_token = os.environ.get("FACEBOOK_ACCESS_TOKEN")
-    graph = facebook.GraphAPI(access_token=access_token, version="2.12")
-    then = datetime.datetime.now() + datetime.timedelta(hours=1)
-    link = next_link[0]
-    message = """
-    Today on The Daily Grower:
-
-    {} --- {}
-
-    Read more at https://dailygrower.com
-    """.format(link.headline, link.blurb)
-    print(graph.put_object(
-        fb_page,
-        "feed",
-        published=False,
-        message="Hello, world",
-        scheduled_publish_time=then.replace(microsecond=0).isoformat()
-    ))
