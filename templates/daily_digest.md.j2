@@ -25,8 +25,20 @@ Enjoy today's link{% if links|length > 1 %}s{% endif %} showcasing the best of t
 {% endif %}
 
 {{ link.blurb | safe }}
-
 {% endfor %}
+
+{% if deals %}
+### New Products, Reviews, and Discounts for You
+
+{% for deal in deals %}
+#### [{{ deal.title | title }}]({{ deal.url }})
+
+{{ deal.blurb | safe }}
+{% endfor %}
+
+[See all](https://dailygrower.com/{{ internal_pages.subscribers }}) products, reviews, special offers, and discounts.
+{% endif %}
+
 {% endblock message_body %}
 
 {% block salutation %}

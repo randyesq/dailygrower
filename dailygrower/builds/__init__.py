@@ -37,9 +37,14 @@ def build_weekday(config):
     # Update that link to be current
     if next_link:
         link_content['pending'].approve_records(next_link)
+        deals_content = DealsLinkAirtableView(
+            config['at_deals_base_id'],
+            config['at_deals_table'],
+            config['at_deals_view']
+        )
 
         # Create daily digest subscriber email
-        send_daily_link_email(config, next_link)
+        send_daily_link_email(config, next_link, deals_content)
 
         # Post to Facebook
         create_facebook_post(config, next_link)
@@ -48,9 +53,16 @@ def build_weekday(config):
 def build_rollup(config):
     """ Rollup build, send weekly digest email, typically a Saturday """
     link_content = _get_link_views(config, current=True)
+    deals_content = DealsLinkAirtableView(
+        config['at_deals_base_id'],
+        config['at_deals_table'],
+        config['at_deals_view']
+    )
 
     # Create weekly digest subscriber email
-    send_weekly_rollup_email(config, link_content['current'].get_view_records())
+    send_weekly_rollup_email(
+        config, link_content['current'].get_view_records(), deals_content
+    )
 
 
 def build_sabbath(config):

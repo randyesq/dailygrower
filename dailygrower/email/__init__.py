@@ -1,4 +1,5 @@
 # Daily Grower Email Package
+import datetime
 import os
 import requests
 from dailygrower.render import ENV, construct_global_data
@@ -6,10 +7,16 @@ from dailygrower.render import ENV, construct_global_data
 BUTTONDOWN_API_KEY = os.environ.get("BUTTONDOWN_API_KEY")
 
 
-def send_daily_link_email(config, links):
+def send_daily_link_email(config, links, deals_content):
     """ Use buttondown to send an email with today's freshest link """
     data = construct_global_data(config)
     data['links'] = links
+    today_new_deals = []
+    for deal in deals_content.get_view_records():
+        if deal.available_date == datetime.datetime.today().date():
+            today_new_deals.append(deal)
+
+    data['deals'] = today_new_deals
     template = ENV.get_template("daily_digest.md.j2", globals=data)
 
     # Send the email via Buttondown API to daily subscribers
@@ -48,10 +55,18 @@ def send_daily_link_email(config, links):
     print("Daily email creation response to all-digest subscribers: %s" % r.text)
 
 
-def send_weekly_rollup_email(config, links):
+def send_weekly_rollup_email(config, links, deals_content):
     """ Use buttondown to send an email with this week's links """
     data = construct_global_data(config)
     data['links'] = links
+    new_deals = []
+    today = datetime.datetime.today().date()
+    for deal in deals_content.get_view_records():
+        days_available = today - deal.available_date
+        if days_available.days <= 7 and days_available.days >= 0:
+            new_deals.append(deal)
+
+    data['deals'] = new_deals
     template = ENV.get_template("weekly_digest.md.j2", globals=data)
 
     # Send the email via Buttondown API to weekly subscribers
@@ -59,7 +74,7 @@ def send_weekly_rollup_email(config, links):
         config['buttondown_api_base_url']+'emails',
         json={
             "body": template.render(),
-            "included_tags": [ config['weekly_digest_subscriber_tag'], config['all_digests_subscriber_tag'] ],
+            "included_tags": [ config['weekly_digest_subscriber_tag'] ],
             "email_type": "public",
             "external_url": "https://dailygrower.com",
             "slug": "weekly-{}".format(data['now'].strftime("%Y-%m-%d")),

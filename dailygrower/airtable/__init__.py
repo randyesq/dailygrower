@@ -44,11 +44,8 @@ class AirtableView(object):
     def get_view_records(self, locale="America/Chicago"):
         """ Get the records in a view of a table """
         url = self._get_table_url()
-        r = requests.get(
-            url,
-            params={'view': self.view, 'userLocale': 'America/Chicago'},
-            auth=self.auth
-        )
+        params={ 'view': self.view, 'userLocale': locale }
+        r = requests.get(url, params=params, auth=self.auth)
         r.raise_for_status()
         records = r.json()['records']
         return self.schema.load(list(records), many=True)

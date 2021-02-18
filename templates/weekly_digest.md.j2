@@ -17,6 +17,19 @@ And now for the stor{% if links|length > 1 %}ies{% else %}y{% endif %} featured 
 
 {{ link.blurb}}
 {% endfor %}
+
+{% if deals %}
+### New Products, Reviews, and Discounts for You This Week
+
+{% for deal in deals %}
+#### [{{ deal.title | title }}]({{ deal.url }})
+
+{{ deal.blurb | safe }}
+{% endfor %}
+
+[See all](https://dailygrower.com/{{ internal_pages.subscribers }}) products, reviews, special offers, and discounts.
+{% endif %}
+
 {% endblock message_body %}
 
 {% block salutation %}
