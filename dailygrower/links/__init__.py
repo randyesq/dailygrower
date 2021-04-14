@@ -45,6 +45,8 @@ class Link(object):
         Fetch a youtube thumbmail image
         # https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
         """
+        if self.image_url:
+            return self.image_url
         vid = dict(parse_qsl(urlparse(self.url).query))['v']
         return 'https://i.ytimg.com/vi_webp/{}/maxresdefault.webp'.format(vid)
 
