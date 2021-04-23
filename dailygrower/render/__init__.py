@@ -37,6 +37,7 @@ STATIC_TEMPLATES = [
     "contrib-thanks.html.j2",
     "subscribe.html.j2",
     "subscribe-thanks.html.j2",
+    "voicemail.html.j2",
 ]
 
 # Templates containing link content
