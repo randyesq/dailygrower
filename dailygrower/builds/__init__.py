@@ -12,6 +12,8 @@ def build_render(config):
     Render a site without making any automatic changes to links, just
     re-render the templates
     """
+#    from dailygrower.social.livestream import fetch_yt_upcoming_livestream
+#    items = fetch_yt_upcoming_livestream()
     link_content = _get_link_views(config, current=True, archived=True)
     deals_content = DealsLinkAirtableView(
         config['at_deals_base_id'],
@@ -47,7 +49,7 @@ def build_weekday(config):
         send_daily_link_email(config, next_link, deals_content)
 
         # Post to Facebook
-        create_facebook_post(config, next_link)
+#        create_facebook_post(config, next_link)
 
 
 def build_rollup(config):
