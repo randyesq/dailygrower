@@ -3,11 +3,11 @@
 
 name: Render Site (Production)
 
-#on:
+on:
 #  push:
 #    branches: [ main ]
 
-#  workflow_dispatch:
+  workflow_dispatch:
 #  schedule:
 #  - cron: "0 11 * * *"
 
