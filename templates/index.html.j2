@@ -16,6 +16,18 @@
   </div>
   <hr>
 
+  <div class="row p-2">
+    <div class="col-md-12">
+    <h5 class="text-center">July is Red X Month @ The Daily Grower</h5>
+    <p>What does that mean? That means we are taking the month of July off to
+rest, relax, and recharge. We'll be back in August with more awesome content for
+you. Be sure to <a href="{{ internal_pages.subscribe }}">subscribe</a> to The
+Daily Grower to get notified when we are back!</p>
+    </div>
+  </div>
+  <hr>
+
+
 {% for link in links %}
   {% set rowloop = loop %}
   <div class="row mt-2 d-flex flex-wrap align-items-center">
@@ -42,7 +54,7 @@
   <div class="col-md-10">
     <div class="alert alert-info text-center" role="alert">
     {% if links | length < 3 %}
-      It's still pretty early in the week. Check out our <a href="{{ internal_pages.archive }}">archives</a> for previously featured stories.
+      Check out our <a href="{{ internal_pages.archive }}">archives</a> for previously featured stories.
     {% else %}
       Looking for more stories from <i>The Daily Grower</i>? Check out our <a href="{{ internal_pages.archive }}">archives</a>.
     {% endif %}
